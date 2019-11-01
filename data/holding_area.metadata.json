@@ -1,0 +1,24 @@
+{
+  "name": "Holding Area",
+  "objects": {
+    "1": {
+      "handle": "door",
+      "exit_action": "down",
+      "exit_room": "hall",
+      "exit_position": {
+        "x": 19,
+        "y": 0
+      }
+    },
+    "2": {
+      "handle": "door",
+      "exit_action": "right",
+      "exit_room": "security_office",
+      "exit_position": {
+        "x": 0,
+        "y": 2
+      }
+    }
+  }
+}
+

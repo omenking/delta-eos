@@ -1,0 +1,14 @@
+{
+  "name": "Corridor",
+  "objects": {
+    "1": {
+      "handle": "door",
+      "exit_action": "up",
+      "exit_room": "holding_area",
+      "exit_position": {
+        "x": 11,
+        "y": 9
+      }
+    }
+  }
+}

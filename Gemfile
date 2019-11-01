@@ -7,3 +7,5 @@ git_source(:github) do |repo_name|
 end
 
 gem 'curses'
+gem 'pry'
+gem 'rspec'

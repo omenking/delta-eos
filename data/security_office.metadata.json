@@ -1,0 +1,16 @@
+{
+  "name": "Security Office",
+  "objects": {
+    "1": {
+      "handle": "door",
+      "exit_action": "left",
+      "exit_room": "holding_area",
+      "exit_position": {
+        "x": 24,
+        "y": 4
+      }
+    }
+  }
+}
+
+
