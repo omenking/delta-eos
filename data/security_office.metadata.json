@@ -3,14 +3,29 @@
   "objects": {
     "1": {
       "handle": "door",
+      "character": "X",
       "exit_action": "left",
       "exit_room": "holding_area",
       "exit_position": {
         "x": 24,
         "y": 4
       }
+    },
+    "C": {
+      "handle": "computer",
+      "character": ":"
+    },
+    "2": {
+      "handle": "locker",
+      "character": "*"
+    },
+    "3": {
+      "handle": "locker",
+      "character": "*"
+    },
+    "4": {
+      "handle": "locker",
+      "character": "*"
     }
   }
 }
-
-

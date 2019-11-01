@@ -7,8 +7,8 @@ class GameData
 
   def initialize
     self.running = true
-    self.player_room = :hall
-    self.player_x = 3
+    self.player_room = :security_office
+    self.player_x = 2
     self.player_y = 2
     self.rooms = {}
   end
@@ -19,11 +19,25 @@ class GameData
     end
   end
 
-  def add_room key, layout, metadata
-    layout   = File.read layout
-    metadata = JSON.parse(File.read(metadata))
+  def add_room key, layout_file, metadata_file
+    layout_data = File.read layout_file
+    metadata    = JSON.parse File.read(metadata_file)
+    layout      = self.layout_to_array(layout_data)
+
+    layout.each_with_index do |e,row|
+      e.each_with_index do |ee,column|
+        if metadata['objects'].key?(layout[row][column])
+          metadata['objects'][layout[row][column]]['position'] = {
+            'x' => column,
+            'y' => row
+          }
+          layout[row][column] = ' '
+        end
+      end
+    end
+
     self.rooms[key] = {
-      'layout'   => self.layout_to_array(layout),
+      'layout'   => layout,
       'metadata' => metadata
     }
   end

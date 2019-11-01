@@ -3,6 +3,7 @@
   "objects": {
     "1": {
       "handle": "door",
+      "character": "X",
       "exit_action": "down",
       "exit_room": "hall",
       "exit_position": {
@@ -12,6 +13,7 @@
     },
     "2": {
       "handle": "door",
+      "character": "X",
       "exit_action": "right",
       "exit_room": "security_office",
       "exit_position": {
@@ -21,4 +23,3 @@
     }
   }
 }
-

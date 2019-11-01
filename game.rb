@@ -23,7 +23,8 @@ class Game
     Room.draw(
       data.player_x,
       data.player_y,
-      data.room_layout
+      data.room_layout,
+      data.room_objects
     )
     Player.draw(
       data.player_x,

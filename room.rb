@@ -8,22 +8,24 @@ class Room
     if data[y].nil? || data[y][x].nil?
       return { 'handle' => :void }
     end
-    case data[y][x]
-    when 'W'
+    if data[y][x] == 'W'
       { 'handle' => :wall  }
-    when ' '
-      { 'handle' => :empty }
     else
-      if objects.key?(data[y][x])
-        objects[data[y][x]]
+      object =
+      objects.find do |key,obj|
+        obj['position']['x'] == x &&
+        obj['position']['y'] == y
+      end
+      if object
+        object[1]
       else
-        raise "object not found for tile: #{data[y][x]}"
+        { 'handle' => :empty }
       end
     end
   end
 
-  def self.draw player_x, player_y, data
-    rendered = RenderWalls.render data
+  def self.draw player_x, player_y, layout, objects
+    rendered = RenderWalls.render layout
     y = 0
     rendered.each do |row|
       setpos(
@@ -32,6 +34,15 @@ class Room
       )
       addstr(row)
       y += 1
+    end
+    objects.each do |key,obj|
+      setpos(
+        obj['position']['y']+((lines/ 2)-player_y),
+        obj['position']['x']+((cols / 2)-player_x)
+      )
+      attron(color_pair(SELECTED_PAIR))
+      addch(obj['character'])
+      attroff(color_pair(SELECTED_PAIR))
     end
   end
 

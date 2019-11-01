@@ -1,7 +1,7 @@
 WWWWWWWWWWWWWW
 W            W
 1            W
-W            W
-W            W
-W            W
+W           2W
+W     C     3W
+W           4W
 WWWWWWWWWWWWWW

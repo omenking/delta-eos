@@ -3,6 +3,7 @@
   "objects": {
     "1": {
       "handle": "door",
+      "character": "X",
       "exit_action": "up",
       "exit_room": "holding_area",
       "exit_position": {

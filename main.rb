@@ -62,27 +62,27 @@ while true
   future_tile  = Room.tile_data new_x, new_y, data.room_layout, data.room_objects
 
   case current_tile['handle'].to_sym
-    when :door
-      if current_tile['exit_action'].to_sym == action
-        data.player_room = current_tile['exit_room'].to_sym
-        data.player_y    = current_tile['exit_position']['y']
-        data.player_x    = current_tile['exit_position']['x']
-      else
-        case future_tile['handle'].to_sym
-        when :empty
-          data.player_y = new_y
-          data.player_x = new_x
-        end
-      end
+  when :door
+    if current_tile['exit_action'].to_sym == action
+      data.player_room = current_tile['exit_room'].to_sym
+      data.player_y    = current_tile['exit_position']['y']
+      data.player_x    = current_tile['exit_position']['x']
     else
       case future_tile['handle'].to_sym
-      when :door
-        data.player_y = new_y
-        data.player_x = new_x
       when :empty
         data.player_y = new_y
         data.player_x = new_x
       end
+    end
+  else
+    case future_tile['handle'].to_sym
+    when :door
+      data.player_y = new_y
+      data.player_x = new_x
+    when :empty
+      data.player_y = new_y
+      data.player_x = new_x
+    end
   end
 
   Game.draw data
