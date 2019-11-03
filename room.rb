@@ -12,12 +12,12 @@ class Room
       { 'handle' => :wall  }
     else
       object =
-      objects.find do |key,obj|
+      objects.find do |obj|
         obj['position']['x'] == x &&
         obj['position']['y'] == y
       end
       if object
-        object[1]
+        object
       else
         { 'handle' => :empty }
       end
@@ -30,19 +30,21 @@ class Room
     rendered.each do |row|
       setpos(
         (lines/ 2)+y-player_y,
-        (cols / 2)-player_x
+        ((cols-Dialog.width) / 2)-player_x
       )
       addstr(row)
       y += 1
     end
-    objects.each do |key,obj|
+    #close_screen
+    #binding.pry
+    objects.each do |obj|
       setpos(
         obj['position']['y']+((lines/ 2)-player_y),
-        obj['position']['x']+((cols / 2)-player_x)
+        obj['position']['x']+(((cols-Dialog.width) / 2)-player_x)
       )
-      attron(color_pair(SELECTED_PAIR))
-      addch(obj['character'])
-      attroff(color_pair(SELECTED_PAIR))
+      attron(color_pair(BLACK_ON_WHITE))
+      addstr(obj['character'])
+      attroff(color_pair(BLACK_ON_WHITE))
     end
   end
 

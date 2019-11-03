@@ -2,21 +2,50 @@ require_relative '../render_walls'
 
 RSpec.describe RenderWalls do
   context "#render" do
-    let(:data) {
+    #let(:data) {
+      #[
+        #['W','W','W'],
+        #['W',' ','W'],
+        #['W','W','W']
+      #]
+    #}
+    #let(:rendered) {
+      #[
+        #'┏━┓',
+        #'┃ ┃',
+        #'┗━┛'
+      #]
+    #}
+    let(:data2) {
       [
-        ['W','W','W'],
-        ['W',' ','W'],
-        ['W','W','W']
+        '  WWWWW  WWWWW  WWWWW    '.split(''),
+        '  W   W  W   W  W   W    '.split(''),
+        'WWW   WWWW   WWWW   WWWWW'.split(''),
+        'W                       W'.split(''),
+        'W                        '.split(''),
+        'W                       W'.split(''),
+        'W                       W'.split(''),
+        'W                       W'.split(''),
+        'W                       W'.split(''),
+        'WWWWWWWWWWW WWWWWWWWWWWWW'.split('')
       ]
     }
-    let(:rendered) {
+    let(:rendered2) {
       [
-        '┏━┓',
-        '┃ ┃',
-        '┗━┛'
+        '  WWWWW  WWWWW  WWWWW    ',
+        '  W   W  W   W  W   W    ',
+        'WWW   wWWW   WWwW   WWWWW',
+        'W                       W',
+        'W                        ',
+        'W                       W',
+        'W                       W',
+        'W                       W',
+        'W                       W',
+        'WWWWWWWWWWW WWWWWWWWWWWWW'
       ]
     }
-    it { expect(RenderWalls.render(data)).to eql(rendered) }
+    #it { expect(RenderWalls.render(data)).to eql(rendered) }
+    it { expect(RenderWalls.render(data2)).to eql(rendered2) }
   end
 
   context '#self.corner_top_left?' do

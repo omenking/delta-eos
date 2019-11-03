@@ -20,9 +20,9 @@ class Player
   end
 
   def self.draw x, y
-    attron(color_pair(SELECTED_PAIR))
-    setpos(lines/2,cols/2)
+    attron(color_pair(BLACK_ON_WHITE))
+    setpos(lines/2,(cols-Dialog.width)/2)
     addch('P')
-    attroff(color_pair(SELECTED_PAIR))
+    attroff(color_pair(BLACK_ON_WHITE))
   end
 end

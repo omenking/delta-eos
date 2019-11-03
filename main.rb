@@ -3,11 +3,14 @@ require_relative 'game_data'
 require_relative 'player'
 require_relative 'render_walls'
 require_relative 'room'
+require_relative 'dialog'
 require_relative 'game'
 
-# colours
-SELECTED_PAIR = 1
-HUDBAR_PAIR = 2
+# colours Foreground Background
+WHITE_ON_BLACK = 0
+BLACK_ON_WHITE = 1
+BLACK_ON_GREEN = 2
+GREEN_ON_BLACK = 3
 
 data = GameData.new
 data.add_room :hall,
@@ -44,6 +47,7 @@ while true
   when 'j' then :down
   when 'k' then :up
   when 'l' then :right
+  when 'f' then :enter
   end
 
   x     = data.player_x
@@ -51,40 +55,60 @@ while true
   new_x = data.player_x
   new_y = data.player_y
 
-  case action
-  when :up    then new_y = Player.up    y
-  when :down  then new_y = Player.down  y
-  when :left  then new_x = Player.left  x
-  when :right then new_x = Player.right x
-  end
 
-  current_tile = Room.tile_data x    , y    , data.room_layout, data.room_objects
-  future_tile  = Room.tile_data new_x, new_y, data.room_layout, data.room_objects
-
-  case current_tile['handle'].to_sym
-  when :door
-    if current_tile['exit_action'].to_sym == action
-      data.player_room = current_tile['exit_room'].to_sym
-      data.player_y    = current_tile['exit_position']['y']
-      data.player_x    = current_tile['exit_position']['x']
-    else
-      case future_tile['handle'].to_sym
-      when :empty
-        data.player_y = new_y
-        data.player_x = new_x
+  case data.mode
+    when :interact
+    when :dialog
+      case action
+      when :up
+        data.dialog_selected_index = Dialog.up data.dialog_selected_index, data.choices
+      when :down
+        data.dialog_selected_index = Dialog.down data.dialog_selected_index, data.choices
+      when :enter
+        case data.dialog_action
+        when :leave
+          data.mode = :room
+        else
+        end
       end
-    end
-  else
-    case future_tile['handle'].to_sym
-    when :door
-      data.player_y = new_y
-      data.player_x = new_x
-    when :empty
-      data.player_y = new_y
-      data.player_x = new_x
-    end
-  end
+    when :room
+      case action
+      when :up    then new_y = Player.up    y
+      when :down  then new_y = Player.down  y
+      when :left  then new_x = Player.left  x
+      when :right then new_x = Player.right x
+      end
 
+      current_tile = Room.tile_data x    , y    , data.room_layout, data.room_objects
+      future_tile  = Room.tile_data new_x, new_y, data.room_layout, data.room_objects
+
+      case current_tile['handle'].to_sym
+      when :door
+        if current_tile['exit_action'].to_sym == action
+          data.player_room = current_tile['exit_room'].to_sym
+          data.player_y    = current_tile['exit_position']['y']
+          data.player_x    = current_tile['exit_position']['x']
+        else
+          case future_tile['handle'].to_sym
+          when :empty
+            data.player_y = new_y
+            data.player_x = new_x
+          end
+        end
+      else
+        case future_tile['handle'].to_sym
+        when :force_field_decker
+          data.dialog_selected_index = 0
+          data.mode = :dialog
+        when :door
+          data.player_y = new_y
+          data.player_x = new_x
+        when :empty
+          data.player_y = new_y
+          data.player_x = new_x
+        end
+      end
+  end
   Game.draw data
   sleep(0.05)
 end

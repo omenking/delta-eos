@@ -9,15 +9,23 @@ class Game
     curs_set(0) # hide cursor
     crmode
     start_color
-    init_pair(SELECTED_PAIR, COLOR_BLACK, COLOR_WHITE)
-    init_pair(HUDBAR_PAIR  , COLOR_BLACK, COLOR_GREEN)
+    init_pair(WHITE_ON_BLACK, COLOR_WHITE, COLOR_BLACK)
+    init_pair(BLACK_ON_WHITE, COLOR_BLACK, COLOR_WHITE)
+    init_pair(BLACK_ON_GREEN, COLOR_BLACK, COLOR_GREEN)
+    init_pair(GREEN_ON_BLACK, COLOR_GREEN, COLOR_BLACK)
     use_default_colors
     refresh
   end
 
   def self.draw data
     clear
+    Dialog.draw(
+      data.mode,
+      data.dialog_selected_index,
+      data.choices
+    )
     HudBar.draw(
+      data.mode,
       data.room_name
     )
     Room.draw(

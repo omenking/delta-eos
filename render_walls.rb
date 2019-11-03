@@ -10,6 +10,7 @@ class RenderWalls
       rendered[row] = ''
       e.each_with_index do |ee,column|
         piece = self.find_wall_piece(data,columns,rows,column,row)
+        #puts "#{column}.#{row}: #{piece}"
         rendered[row] << piece
       end
     end
@@ -56,18 +57,14 @@ class RenderWalls
 
   # ━
   def self.horizontal? data, columns, column, row
-    self.left_exist?(column) &&
-    self.right_exist?(columns,column) &&
-    data[row][column+1] == 'W' &&
-    data[row][column-1] == 'W'
+     self.left_wall?(data,column,row) ||
+     self.right_wall?(data,columns,column,row)
   end
 
   # ┃
   def self.vertical? data, rows, column, row
-    self.top_exist?(row) &&
-    self.bottom_exist?(rows,row) &&
-    data[row+1][column] == 'W' &&
-    data[row-1][column] == 'W'
+    self.top_wall?(data,column,row) ||
+    self.bottom_wall?(data,rows,row,column)
   end
 
   # ╋
@@ -95,33 +92,49 @@ class RenderWalls
 
   # ┏
   def self.corner_top_left? data, columns, rows, column, row
-    (!self.top_exist?(row) || data[row-1][column] != 'W') && #top is not wall
-    (!self.left_exist?(column) || data[row][column-1] != 'W') && #left is not wall
-    self.bottom_exist?(rows,row)      && data[row+1][column] == 'W' &&  # bottom is wall
-    self.right_exist?(columns,column) && data[row][column+1] == 'W'     # right is wall
+    !self.top_wall?(data,column,row) &&
+    !self.left_wall?(data,column,row) &&
+     self.bottom_wall?(data,rows,row,column) &&
+     self.right_wall?(data,columns,column,row)
   end
 
   # ┓
   def self.corner_top_right? data, columns, rows, column, row
-    (!self.top_exist?(row) || data[row-1][column] != 'W') && #top is not wall
-    (!self.right_exist?(columns,column) || data[row][column+1] != 'W') && #right is not wall
-    self.bottom_exist?(rows,row) && data[row+1][column] == 'W' &&  # bottom is wall
-    self.left_exist?(column) && data[row][column-1] == 'W'     # left is wall
+    !self.top_wall?(data,column,row) &&
+    !self.right_wall?(data,columns,column,row) &&
+     self.bottom_wall?(data,rows,row,column) &&
+     self.left_wall?(data,column,row)
   end
 
   # ┗
   def self.corner_bottom_left? data, columns, rows, column, row
-    (!self.bottom_exist?(rows,row) || data[row+1][column] != 'W') && #bottom is not wall
-    (!self.left_exist?(column) || data[row][column-1] != 'W') && #left is not wall
-    (!self.top_exist?(row) || data[row-1][column] == 'W') && #top is  wall
-    self.right_exist?(columns,column) && data[row][column+1] == 'W'     # right is wall
+    !self.bottom_wall?(data,rows,row,column) &&
+    !self.left_wall?(data,column,row) &&
+     self.top_wall?(data,column,row) &&
+     self.right_wall?(data,columns,column,row)
   end
 
   # ┛
   def self.corner_bottom_right? data, columns, rows, column, row
-    (!self.bottom_exist?(rows,row) || data[row+1][column] != 'W') && #bootom is not wall
-    (!self.right_exist?(columns,column) || data[row][column+1] != 'W') && #right is not wall
-    (!self.top_exist?(row) || data[row-1][column] == 'W') && #top is  wall
-    self.left_exist?(column) && data[row][column-1] == 'W'     # left is wall
+    !self.bottom_wall?(data,rows,row,column) &&
+    !self.right_wall?(data,columns,column,row) &&
+     self.top_wall?(data,column,row) &&
+     self.left_wall?(data,column,row)
+  end
+
+  def self.right_wall?(data,columns,column,row)
+    self.right_exist?(columns,column) && data[row][column+1] == 'W'
+  end
+
+  def self.left_wall?(data,column,row)
+    self.left_exist?(column) && data[row][column-1] == 'W'
+  end
+
+  def self.top_wall?(data,column,row)
+    self.top_exist?(row) && data[row-1][column] == 'W'
+  end
+
+  def self.bottom_wall?(data,rows,row,column)
+    self.bottom_exist?(rows,row) && data[row+1][column] == 'W'
   end
 end

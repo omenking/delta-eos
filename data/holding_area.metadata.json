@@ -20,6 +20,18 @@
         "x": 0,
         "y": 2
       }
+    },
+    "F": {
+      "handle": "force_field",
+      "character": "┅"
+    },
+    "G": {
+      "handle": "force_field_decker",
+      "character": "┅"
+    },
+    "D": {
+      "handle": "character_decker",
+      "character": "D"
     }
   }
 }

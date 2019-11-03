@@ -4,6 +4,7 @@ https://www.linuxjournal.com/content/programming-color-ncurses
 https://www.pinterest.ca/pin/160440805446947199/?lp=true
 https://nomediakings.org/games/guilded-youth-a-text-game-with-ascii-animation.html
 http://ascii-table.com/ascii-extended-pc-list.php
+https://www.linuxjournal.com/content/about-ncurses-colors-0
 ## crmode
 Put the terminal into cbreak mode.
 
