@@ -17,6 +17,11 @@ class Game
     refresh
   end
 
+  def self.str x, y, str, color=nil
+    setpos x, y
+    addstr str
+  end
+
   def self.draw data
     clear
     Dialog.draw(

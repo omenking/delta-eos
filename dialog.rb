@@ -4,7 +4,7 @@ include Curses
 
 class Dialog
   def self.width
-    40
+    60
   end
 
   def self.draw mode, dialog_selected_index, choices
@@ -22,10 +22,54 @@ class Dialog
         #addstr(str)
       #end
       #attroff(color_pair(BLACK_ON_GREEN))
-
     end
 
-    return unless mode == :dialog
+    case mode
+    when :dialog
+      self.draw_choices dialog_selected_index, choices
+    when :room
+      self.draw_stats
+    end
+  end
+
+  def self.draw_stats
+    Game.str 2,cols-self.width+2,'Health    ████████ ████████ ████████'
+    Game.str 4,cols-self.width+2,'Morale    ████████████████ ╳╳╳╳╳╳╳╳╳╳╳╳╳'
+
+    Game.str 6,cols-self.width+2,'Experience (30 / 120 XP)'
+    line = 'Level 2'
+    Game.str 6,cols-line.length-1, line
+    Game.str 8,cols-self.width+2, "█████━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━▏"
+
+    row = 10
+    col = cols-self.width+2
+    Game.str row, col, 'Skills'         ; row += 2
+    Game.str row, col, '  Brains (3)'   ; row += 1
+    Game.str row, col, '  ├ Enthusiasm ◆ ◆ - - - - - - - - - -' ; row += 1
+    Game.str row, col, '  ├ Logic      ◆ ◆ - - - - - - - - - -' ; row += 1
+    Game.str row, col, '  ├ Knowledge  ◆ ◆ - - - - - - - - - -' ; row += 1
+    Game.str row, col, '  └ Hacking    ◆ ◆ - - - - - - - - - -' ; row += 2
+    Game.str row, col, '  Brawns (2)'  ; row += 1
+    Game.str row, col, '  ├ Endurance  ◆ ◆ - - - - - - - - - -' ; row += 1
+    Game.str row, col, '  ├ Reaction   ◆ ◆ - - - - - - - - - -' ; row += 1
+    Game.str row, col, '  ├ Muscle     ◆ ◆ - - - - - - - - - -' ; row += 1
+    Game.str row, col, '  └ Authority  ◆ ◆ - - - - - - - - - -' ; row += 2
+    Game.str row, col, '  Luck (4)'    ; row += 1
+    Game.str row, col, '  ├ Acting     ◆ ◆ - - - - - - - - - -' ; row += 1
+    Game.str row, col, '  ├ Hunches    ◆ ◆ - - - - - - - - - -' ; row += 1
+    Game.str row, col, '  ├ Perception ◆ ◆ - - - - - - - - - -' ; row += 1
+    Game.str row, col, '  └ Mysticsm   ◆ ◆ - - - - - - - - - -' ; row += 2
+
+    Game.str row, col, 'Inventory'; row += 2
+    Game.str row, col, '  Head       (None)'; row += 1
+    Game.str row, col, '  Chest      (None)'; row += 1
+    Game.str row, col, '  Legs       (None)'; row += 1
+    Game.str row, col, '  Left-hand  (None)'; row += 1
+    Game.str row, col, '  Right-hand (None)'; row += 1
+    Game.str row, col, '  Feet       (None)'; row += 1
+  end
+
+  def self.draw_choices dialog_selected_index, choices
     max_lines = 0
     choice_parts = []
     choices.each_with_index do |choice,i|
@@ -47,6 +91,7 @@ class Dialog
         current_line += 1
       end
     end
+
   end
 
   def self.up dialog_selected_index, choices

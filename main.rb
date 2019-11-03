@@ -57,7 +57,6 @@ while true
 
 
   case data.mode
-    when :interact
     when :dialog
       case action
       when :up

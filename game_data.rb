@@ -34,18 +34,6 @@ class GameData
     end
   end
 
-  def dialog_mode?
-    self.mode == :dialog
-  end
-
-  def room_mode?
-    self.mode == :room
-  end
-
-  def interact_mode?
-    self.mode == :interact
-  end
-
   def add_room key, layout_file, metadata_file
     layout_data = File.read layout_file
     metadata    = JSON.parse File.read(metadata_file)
