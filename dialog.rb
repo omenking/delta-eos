@@ -1,19 +1,18 @@
 require 'pry'
 require "curses"
 include Curses
-
 class Dialog
   def self.width
     60
   end
 
-  def self.draw mode, dialog_selected_index, choices
+  def self.draw mode, dialog_selected_index, strand, level, next_exp, prev_exp, exp
     lines.times.each do |row|
       line = ''
       setpos(row,cols-self.width)
 
       attron(color_pair(GREEN_ON_BLACK)) if mode == :dialog
-      addstr('╽')
+      addstr('│')
       attroff(color_pair(GREEN_ON_BLACK)) if mode == :dialog
       #attron(color_pair(BLACK_ON_GREEN))
       #data = File.read "#{Dir.pwd}/data/character.txt"
@@ -26,24 +25,41 @@ class Dialog
 
     case mode
     when :dialog
-      self.draw_choices dialog_selected_index, choices
+      self.draw_choices dialog_selected_index, strand
     when :room
-      self.draw_stats
+      self.draw_stats level, next_exp, prev_exp, exp
     end
   end
 
-  def self.draw_stats
-    Game.str 2,cols-self.width+2,'Health    ████████ ████████ ████████'
-    Game.str 4,cols-self.width+2,'Morale    ████████████████ ╳╳╳╳╳╳╳╳╳╳╳╳╳'
+  def self.draw_stats level, next_exp, prev_exp, exp
+    Game.str 1,cols-self.width+2,'Health    █████████ █████████ █████████ █████████ [N] (3)'
+    Game.str 3,cols-self.width+2,'Morale    ███████████████████ ╳╳╳╳╳╳╳╳╳╳╳╳╳╳╳╳╳╳╳ [M] (2)'
 
-    Game.str 6,cols-self.width+2,'Experience (30 / 120 XP)'
-    line = 'Level 2'
+    #divider
+    line = '├'
+    (self.width-1).times.each{line << '─' }
+    Game.str 5, cols-self.width, line
+
+    Game.str 6,cols-self.width+2,"Experience (#{exp} / #{next_exp} XP)"
+    line = "Level #{level}"
     Game.str 6,cols-line.length-1, line
-    Game.str 8,cols-self.width+2, "█████━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━▏"
 
-    row = 10
+    Game.str 8,cols-self.width+2, "╾╾╾╾╾╾╾╾╾╾╾╾╾╾╾╾╾╾╾╾╾╾╾╾╾╾╾╾╾╾╾╾╾╾╾╾╾╾╾╾╾╾╾╾╾╾╾╾╾╾╾╾╾╾╾╾╾▏"
+    per   = ((100.0 / next_exp) * (exp-prev_exp))/100
+    count = (57.0*per).floor
+
+    line = ''
+    count.times.each{|t|line << '█'}
+    Game.str 8,cols-self.width+2, line
+
+    #divider
+    line = '├'
+    (self.width-1).times.each{line << '─' }
+    Game.str 10, cols-self.width, line
+
+    row = 11
     col = cols-self.width+2
-    Game.str row, col, 'Skills'         ; row += 2
+    Game.str row, col, 'Skills [T]'         ; row += 2
     Game.str row, col, '  Brains (3)'   ; row += 1
     Game.str row, col, '  ├ Enthusiasm ◆ ◆ - - - - - - - - - -' ; row += 1
     Game.str row, col, '  ├ Logic      ◆ ◆ - - - - - - - - - -' ; row += 1
@@ -60,20 +76,27 @@ class Dialog
     Game.str row, col, '  ├ Perception ◆ ◆ - - - - - - - - - -' ; row += 1
     Game.str row, col, '  └ Mysticsm   ◆ ◆ - - - - - - - - - -' ; row += 2
 
-    Game.str row, col, 'Inventory'; row += 2
-    Game.str row, col, '  Head       (None)'; row += 1
-    Game.str row, col, '  Chest      (None)'; row += 1
-    Game.str row, col, '  Legs       (None)'; row += 1
-    Game.str row, col, '  Left-hand  (None)'; row += 1
-    Game.str row, col, '  Right-hand (None)'; row += 1
-    Game.str row, col, '  Feet       (None)'; row += 1
+    #divider
+    line = '├'
+    (self.width-1).times.each{line << '─' }
+    Game.str row, cols-self.width, line
+
+    row += 1
+
+    Game.str row, col, 'Inventory [I]'; row += 2
+    Game.str row, col, '  Head       (none)'; row += 1
+    Game.str row, col, '  Chest      (none)'; row += 1
+    Game.str row, col, '  Legs       (none)'; row += 1
+    Game.str row, col, '  Left-hand  (none)'; row += 1
+    Game.str row, col, '  Right-hand (none)'; row += 1
+    Game.str row, col, '  Feet       (none)'; row += 1
   end
 
-  def self.draw_choices dialog_selected_index, choices
+  def self.draw_choices dialog_selected_index, strand
     max_lines = 0
     choice_parts = []
-    choices.each_with_index do |choice,i|
-      text = "#{i+1}). " + choice[:text]
+    strand['choices'].each_with_index do |choice,i|
+      text = "#{i+1}). " + choice['text']
       parts = text.scan(/.{1,#{self.width-4}}/)
       choice_parts << parts
       max_lines += parts.length
@@ -94,16 +117,20 @@ class Dialog
 
   end
 
-  def self.up dialog_selected_index, choices
+  def self.enter strand, dialog_selected_index
+    strand['choices'][dialog_selected_index]['results']
+  end
+
+  def self.up dialog_selected_index, strand
     if dialog_selected_index == 0
-      choices.length-1
+      strand['choices'].length-1
     else
       dialog_selected_index - 1
     end
   end
 
-  def self.down dialog_selected_index, choices
-    if dialog_selected_index == choices.length-1
+  def self.down dialog_selected_index, strand
+    if dialog_selected_index == strand['choices'].length-1
       0
     else
       dialog_selected_index + 1

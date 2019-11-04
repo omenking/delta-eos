@@ -27,7 +27,11 @@ class Game
     Dialog.draw(
       data.mode,
       data.dialog_selected_index,
-      data.choices
+      data.strand,
+      data.level,
+      data.next_exp,
+      data.prev_exp,
+      data.exp
     )
     HudBar.draw(
       data.mode,

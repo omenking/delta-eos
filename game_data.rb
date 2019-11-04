@@ -6,7 +6,9 @@ class GameData
                 :rooms,
                 :mode,
                 :dialog_selected_index,
-                :choices
+                :threads,
+                :thread,
+                :exp
 
   def initialize
     self.dialog_selected_index = 0
@@ -16,16 +18,26 @@ class GameData
     self.player_x = 11
     self.player_y = 5
     self.rooms = {}
-    self.choices = [
-      { action: :leave, text: "Confess, we know you did it, we have the evidence"},
-      { action: :leave, text: "I know you didn't do it, maybe you can help us"},
-      { action: :leave, text: "You're going to have to convince me otherwise"},
-      { action: :leave, text: "(Leave) Forget it, we'll talk later..."}
-    ]
+    self.threads = {}
+    self.exp = 0
   end
 
   def dialog_action
     self.choices[self.dialog_selected_index][:action]
+  end
+
+  def level
+    (0.08 * Math.sqrt(self.exp)).floor
+  end
+
+  def next_exp
+    val = (self.level+1) / 0.08
+    (val*val).floor
+  end
+
+  def prev_exp
+    val = (self.level) / 0.08
+    (val*val).floor
   end
 
   def layout_to_array data
@@ -65,6 +77,22 @@ class GameData
       'layout'   => layout,
       'metadata' => metadata
     }
+  end
+
+  def add_thread key, thread_file
+    thread = JSON.parse File.read(thread_file)
+    self.threads[key.to_sym] = thread
+  end
+
+  def strand
+    return nil unless self.thread
+    state = self.threads[self.thread.to_sym]['state']
+    self.threads[self.thread.to_sym]['strands'][state]
+  end
+
+  def strand_result
+    result_key = self.strand['choices'][dialog_selected_index]['result']
+    self.threads[self.thread]['results'][result_key]
   end
 
   def room_name

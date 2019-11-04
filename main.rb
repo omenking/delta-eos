@@ -14,14 +14,16 @@ GREEN_ON_BLACK = 3
 
 data = GameData.new
 data.add_room :hall,
-              "#{Dir.pwd}/data/hall.layout.txt",
-              "#{Dir.pwd}/data/hall.metadata.json"
+              "#{Dir.pwd}/data/rooms/hall.layout.txt",
+              "#{Dir.pwd}/data/rooms/hall.metadata.json"
 data.add_room :holding_area,
-              "#{Dir.pwd}/data/holding_area.layout.txt",
-              "#{Dir.pwd}/data/holding_area.metadata.json"
+              "#{Dir.pwd}/data/rooms/holding_area.layout.txt",
+              "#{Dir.pwd}/data/rooms/holding_area.metadata.json"
 data.add_room :security_office,
-              "#{Dir.pwd}/data/security_office.layout.txt",
-              "#{Dir.pwd}/data/security_office.metadata.json"
+              "#{Dir.pwd}/data/rooms/security_office.layout.txt",
+              "#{Dir.pwd}/data/rooms/security_office.metadata.json"
+data.add_thread :decker_holding_cell,
+              "#{Dir.pwd}/data/threads/decker_holding_cell.json"
 
 def onsig(sig)
   close_screen
@@ -60,15 +62,13 @@ while true
     when :dialog
       case action
       when :up
-        data.dialog_selected_index = Dialog.up data.dialog_selected_index, data.choices
+        data.dialog_selected_index = Dialog.up data.dialog_selected_index, data.strand
       when :down
-        data.dialog_selected_index = Dialog.down data.dialog_selected_index, data.choices
+        data.dialog_selected_index = Dialog.down data.dialog_selected_index, data.strand
       when :enter
-        case data.dialog_action
-        when :leave
-          data.mode = :room
-        else
-        end
+        result = data.strand_result
+        data.mode = :room         if result['leave']
+        data.exp += result['exp'] if result['exp']
       end
     when :room
       case action
@@ -98,7 +98,8 @@ while true
         case future_tile['handle'].to_sym
         when :force_field_decker
           data.dialog_selected_index = 0
-          data.mode = :dialog
+          data.thread = :decker_holding_cell
+          data.mode   = :dialog
         when :door
           data.player_y = new_y
           data.player_x = new_x

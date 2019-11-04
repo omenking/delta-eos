@@ -5,6 +5,11 @@ https://www.pinterest.ca/pin/160440805446947199/?lp=true
 https://nomediakings.org/games/guilded-youth-a-text-game-with-ascii-animation.html
 http://ascii-table.com/ascii-extended-pc-list.php
 https://www.linuxjournal.com/content/about-ncurses-colors-0
+https://gamedev.stackexchange.com/questions/13638/algorithm-for-dynamically-calculating-a-level-based-on-experience-points
+https://gamedev.stackexchange.com/questions/13798/finding-next-experience-level-using-the-square-root
+https://onlyagame.typepad.com/only_a_game/2006/08/mathematics_of_.html
+https://blog.jakelee.co.uk/converting-levels-into-xp-vice-versa/
+
 ## crmode
 Put the terminal into cbreak mode.
 
