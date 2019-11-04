@@ -50,6 +50,10 @@ while true
   when 'k' then :up
   when 'l' then :right
   when 'f' then :enter
+  when 'n' then :health
+  when 'm' then :morale
+  when 't' then :skills
+  when 'i' then :inv
   end
 
   x     = data.player_x
@@ -76,6 +80,14 @@ while true
       when :down  then new_y = Player.down  y
       when :left  then new_x = Player.left  x
       when :right then new_x = Player.right x
+      when :health
+        data.health[:stock]   = data.health[:stock] - 1
+        data.health[:current] = data.health[:current] + 1
+      when :morale
+        data.morale[:stock]   = data.morale[:stock] - 1
+        data.morale[:current] = data.morale[:current] + 1
+      when :skills
+      when :inv
       end
 
       current_tile = Room.tile_data x    , y    , data.room_layout, data.room_objects

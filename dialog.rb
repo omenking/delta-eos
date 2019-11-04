@@ -6,7 +6,7 @@ class Dialog
     60
   end
 
-  def self.draw mode, dialog_selected_index, strand, level, next_exp, prev_exp, exp
+  def self.draw mode, dialog_selected_index, strand, level, next_exp, prev_exp, exp, skills, health, morale
     lines.times.each do |row|
       line = ''
       setpos(row,cols-self.width)
@@ -27,13 +27,30 @@ class Dialog
     when :dialog
       self.draw_choices dialog_selected_index, strand
     when :room
-      self.draw_stats level, next_exp, prev_exp, exp
+      self.draw_stats level, next_exp, prev_exp, exp, skills, health, morale
     end
   end
 
-  def self.draw_stats level, next_exp, prev_exp, exp
-    Game.str 1,cols-self.width+2,'Health    █████████ █████████ █████████ █████████ [N] (3)'
-    Game.str 3,cols-self.width+2,'Morale    ███████████████████ ╳╳╳╳╳╳╳╳╳╳╳╳╳╳╳╳╳╳╳ [M] (2)'
+  def self.draw_stats level, next_exp, prev_exp, exp, skills, health, morale
+    #health[:current]
+
+    #morale[:current]
+    #morale[:max]
+
+    count = (40 - (health[:max]-1))/health[:max]
+    line = health[:max].times.map{|t| health[:current] > t ? count.times.map{|tt|'█'}.join('') : count.times.map{|tt|'╳'}.join('') }.join(' ')
+    Game.str 1,cols-self.width+2,"Health  #{line}"
+    if health[:stock] > 0
+      line = "[N] (#{health[:stock]})"
+      Game.str 1,cols-line.size, line
+    end
+    count = (40 - (morale[:max]-1))/morale[:max]
+    line = morale[:max].times.map{|t| morale[:current] > t ? count.times.map{|tt|'█'}.join('') : count.times.map{|tt|'╳'}.join('') }.join(' ')
+    Game.str 3,cols-self.width+2,"Morale  #{line}"
+    if morale[:stock] > 0
+      line = "[M] (#{morale[:stock]})"
+      Game.str 3,cols-line.size, line
+    end
 
     #divider
     line = '├'
@@ -60,21 +77,21 @@ class Dialog
     row = 11
     col = cols-self.width+2
     Game.str row, col, 'Skills [T]'         ; row += 2
-    Game.str row, col, '  Brains (3)'   ; row += 1
-    Game.str row, col, '  ├ Enthusiasm ◆ ◆ - - - - - - - - - -' ; row += 1
-    Game.str row, col, '  ├ Logic      ◆ ◆ - - - - - - - - - -' ; row += 1
-    Game.str row, col, '  ├ Knowledge  ◆ ◆ - - - - - - - - - -' ; row += 1
-    Game.str row, col, '  └ Hacking    ◆ ◆ - - - - - - - - - -' ; row += 2
-    Game.str row, col, '  Brawns (2)'  ; row += 1
-    Game.str row, col, '  ├ Endurance  ◆ ◆ - - - - - - - - - -' ; row += 1
-    Game.str row, col, '  ├ Reaction   ◆ ◆ - - - - - - - - - -' ; row += 1
-    Game.str row, col, '  ├ Muscle     ◆ ◆ - - - - - - - - - -' ; row += 1
-    Game.str row, col, '  └ Authority  ◆ ◆ - - - - - - - - - -' ; row += 2
-    Game.str row, col, '  Luck (4)'    ; row += 1
-    Game.str row, col, '  ├ Acting     ◆ ◆ - - - - - - - - - -' ; row += 1
-    Game.str row, col, '  ├ Hunches    ◆ ◆ - - - - - - - - - -' ; row += 1
-    Game.str row, col, '  ├ Perception ◆ ◆ - - - - - - - - - -' ; row += 1
-    Game.str row, col, '  └ Mysticsm   ◆ ◆ - - - - - - - - - -' ; row += 2
+    Game.str row, col, "  Brains (#{skills[:brains]})"   ; row += 1
+    Game.str row, col, "  ├ Enthusiasm #{self.skill_points_draw(skills[:brains] + skills[:enthusiasm])}" ; row += 1
+    Game.str row, col, "  ├ Logic      #{self.skill_points_draw(skills[:brains] + skills[:logic])}" ; row += 1
+    Game.str row, col, "  ├ Knowledge  #{self.skill_points_draw(skills[:brains] + skills[:knowledge])}" ; row += 1
+    Game.str row, col, "  └ Hacking    #{self.skill_points_draw(skills[:brains] + skills[:hacking])}" ; row += 2
+    Game.str row, col, "  Brawns (#{skills[:brawns]})"  ; row += 1
+    Game.str row, col, "  ├ Endurance  #{self.skill_points_draw(skills[:brawns] + skills[:endurance])}" ; row += 1
+    Game.str row, col, "  ├ Reaction   #{self.skill_points_draw(skills[:brawns] + skills[:reaction])}" ; row += 1
+    Game.str row, col, "  ├ Muscle     #{self.skill_points_draw(skills[:brawns] + skills[:muscle])}" ; row += 1
+    Game.str row, col, "  └ Authority  #{self.skill_points_draw(skills[:brawns] + skills[:authority])}" ; row += 2
+    Game.str row, col, "  Luck (#{skills[:luck]})"    ; row += 1
+    Game.str row, col, "  ├ Acting     #{self.skill_points_draw(skills[:luck] + skills[:acting])}" ; row += 1
+    Game.str row, col, "  ├ Hunches    #{self.skill_points_draw(skills[:luck] + skills[:hunches])}" ; row += 1
+    Game.str row, col, "  ├ Perception #{self.skill_points_draw(skills[:luck] + skills[:perception])}" ; row += 1
+    Game.str row, col, "  └ Mysticsm   #{self.skill_points_draw(skills[:luck] + skills[:mysticsm])}" ; row += 2
 
     #divider
     line = '├'
@@ -90,6 +107,11 @@ class Dialog
     Game.str row, col, '  Left-hand  (none)'; row += 1
     Game.str row, col, '  Right-hand (none)'; row += 1
     Game.str row, col, '  Feet       (none)'; row += 1
+  end
+
+  def self.skill_points_draw points
+    line = 20.times.map{|t| points > t ? '◆' : '-' }
+    line.join(' ')
   end
 
   def self.draw_choices dialog_selected_index, strand

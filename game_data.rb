@@ -8,7 +8,10 @@ class GameData
                 :dialog_selected_index,
                 :threads,
                 :thread,
-                :exp
+                :exp,
+                :skills,
+                :health,
+                :morale
 
   def initialize
     self.dialog_selected_index = 0
@@ -20,6 +23,33 @@ class GameData
     self.rooms = {}
     self.threads = {}
     self.exp = 0
+    self.health = {
+      current: 1,
+      max: 6,
+      stock: 3
+    }
+    self.morale = {
+      current: 2,
+      max: 2,
+      stock: 1
+    }
+    self.skills = {
+      brains: 3,
+      enthusiasm: 1,
+      logic: 0,
+      knowledge: 1,
+      hacking: 0,
+      brawns: 2,
+      endurance: 0,
+      reaction: 0,
+      muscle: 0,
+      authority: 0,
+      luck: 2,
+      acting: 0,
+      hunches: 1,
+      perception: 0,
+      mysticsm: 0
+    }
   end
 
   def dialog_action

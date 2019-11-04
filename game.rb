@@ -31,7 +31,10 @@ class Game
       data.level,
       data.next_exp,
       data.prev_exp,
-      data.exp
+      data.exp,
+      data.skills,
+      data.health,
+      data.morale
     )
     HudBar.draw(
       data.mode,
