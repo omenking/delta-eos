@@ -50,6 +50,9 @@ class Game
       data.player_x,
       data.player_y
     )
+    Overlay.draw(
+      data.mode
+    )
     refresh
   end
 end

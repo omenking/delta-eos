@@ -4,6 +4,7 @@ require_relative 'player'
 require_relative 'render_walls'
 require_relative 'room'
 require_relative 'dialog'
+require_relative 'overlay'
 require_relative 'game'
 
 # colours Foreground Background
@@ -54,6 +55,7 @@ while true
   when 'm' then :morale
   when 't' then :skills
   when 'i' then :inv
+  when 'x' then :exit
   end
 
   x     = data.player_x
@@ -61,8 +63,12 @@ while true
   new_x = data.player_x
   new_y = data.player_y
 
-
   case data.mode
+    when :overlay
+      case action
+      when :exit
+        data.mode = :room
+      end
     when :dialog
       case action
       when :up
@@ -87,7 +93,9 @@ while true
         data.morale[:stock]   = data.morale[:stock] - 1
         data.morale[:current] = data.morale[:current] + 1
       when :skills
+        data.mode = :overlay
       when :inv
+        data.mode = :overlay
       end
 
       current_tile = Room.tile_data x    , y    , data.room_layout, data.room_objects
