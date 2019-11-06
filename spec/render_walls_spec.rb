@@ -18,30 +18,46 @@ RSpec.describe RenderWalls do
     #}
     let(:data2) {
       [
-        '  WWWWW  WWWWW  WWWWW    '.split(''),
-        '  W   W  W   W  W   W    '.split(''),
-        'WWW   WWWW   WWWW   WWWWW'.split(''),
-        'W                       W'.split(''),
-        'W                        '.split(''),
-        'W                       W'.split(''),
-        'W                       W'.split(''),
-        'W                       W'.split(''),
-        'W                       W'.split(''),
-        'WWWWWWWWWWW WWWWWWWWWWWWW'.split('')
+'WWWWWWWWW                           '.split(''),
+'W       W                           '.split(''),
+'        W                           '.split(''),
+'W       W                           '.split(''),
+'W       W                           '.split(''),
+'W       W                           '.split(''),
+'W       WWWWWWWWWWWWW  WWWWWWWWWWWWW'.split(''),
+'W                   WWWW           W'.split(''),
+'W                                   '.split(''),
+'W                                   '.split(''),
+'W                   WWWW           W'.split(''),
+'        WWWWWWWWWWWWWWWWWWWWWWWWWWWW'.split(''),
+'W       W                           '.split(''),
+'W       W                           '.split(''),
+'W       W                           '.split(''),
+'W       W                           '.split(''),
+'W       W                           '.split(''),
+'WWWW WWWW                           '.split('')
       ]
     }
     let(:rendered2) {
       [
-        '  WWWWW  WWWWW  WWWWW    ',
-        '  W   W  W   W  W   W    ',
-        'WWW   wWWW   WWwW   WWWWW',
-        'W                       W',
-        'W                        ',
-        'W                       W',
-        'W                       W',
-        'W                       W',
-        'W                       W',
-        'WWWWWWWWWWW WWWWWWWWWWWWW'
+'┏━━━━━━━┓                           ',
+'┃       ┃                           ',
+'        ┃                           ',
+'┃       ┃                           ',
+'┃       ┃                           ',
+'┃       ┃                           ',
+'┃       ┃━━━━━━━━━━━┓  ┃━━━━━━━━━━━┓',
+'┃                   ┃━━┛           ┃',
+'┃                                   ',
+'┃                                   ',
+'┃                   ┃┓┓┓           ┃',
+'        ┃━━━━━━━━━━━┛┛┛┛━━━━━━━━━━━┛',
+'┃       ┃                           ',
+'┃       ┃                           ',
+'┃       ┃                           ',
+'┃       ┃                           ',
+'┃       ┃                           ',
+'┗━━━ ━━━┛                           '
       ]
     }
     #it { expect(RenderWalls.render(data)).to eql(rendered) }

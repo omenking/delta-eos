@@ -1,0 +1,70 @@
+{
+  "name": "Corridor",
+  "objects": {
+    "1": {
+      "handle": "door",
+      "exit_action": "left",
+      "exit_room": "hall",
+      "exit_position": {
+        "x": 46,
+        "y": 2
+      },
+      "state": "closed",
+      "states": {
+        "opening": { "character": "▐"},
+        "opened" : { "character": " "},
+        "closed" : { "character": "█"}
+      }
+    },
+    "2": {
+      "handle": "door",
+      "exit_action": "left",
+      "exit_room": "foreman",
+      "exit_position": {
+        "x": 20,
+        "y": 12
+      },
+      "state": "closed",
+      "states": {
+        "opening": { "character": "▐"},
+        "opened" : { "character": " "},
+        "closed" : { "character": "█"}
+      }
+    },
+    "^": {
+      "handle": "lift",
+      "exit_action": "down",
+      "exit_room": "foreman",
+      "exit_position": {
+        "x": 0,
+        "y": 6
+      },
+      "state": "closed",
+      "states": {
+        "opening": { "character": "▐"},
+        "opened" : { "character": " "},
+        "closed" : { "character": "^", "color": "black_white"}
+      }
+    },
+    "F": {
+      "handle": "force_field",
+      "character": "┇",
+      "color": "red_black"
+    },
+    "#": {
+      "handle": "computer",
+      "character": "▣"
+    },
+    "╬": { "handle": "pipe_tr", "character": "╬"},
+    "╗": { "handle": "pipe_tr", "character": "╗"},
+    "╝": { "handle": "pipe_br", "character": "╝"},
+    "║": { "handle": "pipe_v", "character": "║"},
+    "║": { "handle": "pipe_v", "character": "║"},
+    "╩": { "handle": "pipe_tb", "character": "╩"},
+    "╦": { "handle": "pipe_tt" , "character": "╦"},
+    "═": { "handle": "pipe_s" , "character": "═"},
+    "╚": { "handle": "pipe_bl", "character": "╚"},
+    "╔": { "handle": "pipe_tl", "character": "╔"}
+  }
+}
+

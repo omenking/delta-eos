@@ -11,9 +11,13 @@ class Dialog
       line = ''
       setpos(row,cols-self.width)
 
-      attron(color_pair(GREEN_ON_BLACK)) if mode == :dialog
-      addstr('│')
-      attroff(color_pair(GREEN_ON_BLACK)) if mode == :dialog
+      if mode == :dialog
+        Color.color :green_black do
+          addstr('│')
+        end
+      else
+        addstr('│')
+      end
       #attron(color_pair(BLACK_ON_GREEN))
       #data = File.read "#{Dir.pwd}/data/character.txt"
       #data.split("\n").each_with_index do |str,i|
@@ -143,9 +147,13 @@ class Dialog
     choice_parts.each_with_index do |choice,choice_index|
       choice.each do |choice_part|
         setpos(current_line+2,cols-self.width+2)
-        attron(color_pair(BLACK_ON_GREEN)) if dialog_selected_index == choice_index
-        addstr(choice_part)
-        attroff(color_pair(BLACK_ON_GREEN)) if dialog_selected_index == choice_index
+        if dialog_selected_index == choice_index
+          Color.color :black_green do
+            addstr(choice_part)
+          end
+        else
+          addstr(choice_part)
+        end
         current_line += 1
       end
     end

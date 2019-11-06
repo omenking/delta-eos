@@ -11,18 +11,20 @@ class GameData
                 :exp,
                 :skills,
                 :health,
-                :morale
+                :morale,
+                :frame
 
   def initialize
     self.dialog_selected_index = 0
     self.mode = :room
     self.running = true
-    self.player_room = :holding_area
-    self.player_x = 11
-    self.player_y = 5
+    self.player_room = :hall_gamma
+    self.player_x = 22
+    self.player_y = 2
     self.rooms = {}
     self.threads = {}
     self.exp = 0
+    self.frame = 0
     self.health = {
       current: 1,
       max: 6,
@@ -130,6 +132,10 @@ class GameData
     self.threads[self.thread_key]['results'][result_key]
   end
 
+  def room
+    self.rooms[self.player_room]
+  end
+
   def room_name
     self.rooms[self.player_room]['metadata']['name']
   end
@@ -140,5 +146,9 @@ class GameData
 
   def room_objects
     self.rooms[self.player_room]['metadata']['objects']
+  end
+
+  def room_states
+    self.rooms[self.player_room]['metadata']['states']
   end
 end

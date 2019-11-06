@@ -17,8 +17,18 @@ class RenderWalls
     rendered
   end
 
+  def self.manual_wall? val
+    ['┏','┓','┗','━','┃','╋','┳','┻','┣','┫'].include?(val)
+  end
+
+  def self.wall? val
+    ['W','┏','┓','┗','━','┃','╋','┳','┻','┣','┫'].include?(val)
+  end
+
   def self.find_wall_piece data,columns,rows,column,row
-    if data[row][column] == 'W'
+    if self.manual_wall?(data[row][column])
+      data[row][column]
+    elsif data[row][column] == 'W'
       if self.corner_top_left?(data,columns,rows,column,row)
        '┏'
       elsif self.corner_top_right?(data,columns,rows,column,row)
@@ -123,18 +133,18 @@ class RenderWalls
   end
 
   def self.right_wall?(data,columns,column,row)
-    self.right_exist?(columns,column) && data[row][column+1] == 'W'
+    self.right_exist?(columns,column) && self.wall?(data[row][column+1])
   end
 
   def self.left_wall?(data,column,row)
-    self.left_exist?(column) && data[row][column-1] == 'W'
+    self.left_exist?(column) && self.wall?(data[row][column-1])
   end
 
   def self.top_wall?(data,column,row)
-    self.top_exist?(row) && data[row-1][column] == 'W'
+    self.top_exist?(row) &&self.wall?(data[row-1][column])
   end
 
   def self.bottom_wall?(data,rows,row,column)
-    self.bottom_exist?(rows,row) && data[row+1][column] == 'W'
+    self.bottom_exist?(rows,row) && self.wall?(data[row+1][column])
   end
 end

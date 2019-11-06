@@ -1,13 +1,13 @@
 {
-  "name": "Holding Area",
+  "name": "Foreman's Office",
   "objects": {
     "1": {
       "handle": "door",
-      "exit_action": "down",
+      "exit_action": "left",
       "exit_room": "hall",
       "exit_position": {
-        "x": 22,
-        "y": 0
+        "x": 26,
+        "y": 10
       },
       "state": "closed",
       "states": {
@@ -19,32 +19,17 @@
     "2": {
       "handle": "door",
       "exit_action": "right",
-      "exit_room": "security_office",
+      "exit_room": "hall_beta",
       "exit_position": {
         "x": 0,
-        "y": 2
+        "y": 15
       },
-      "state": "locked",
+      "state": "closed",
       "states": {
-        "locked" : { "character": "◦", "color": "black_white"},
         "opening": { "character": "▐"},
         "opened" : { "character": " "},
         "closed" : { "character": "█"}
       }
-    },
-    "F": {
-      "handle": "force_field",
-      "character": "┅",
-      "color": "red_black"
-    },
-    "G": {
-      "handle": "force_field_decker",
-      "character": "┅",
-      "color": "red_black"
-    },
-    "D": {
-      "handle": "character_decker",
-      "character": "D"
     }
   }
 }

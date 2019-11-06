@@ -5,6 +5,7 @@ include Curses
 
 class Game
   def self.init
+    timeout = 500
     init_screen
     curs_set(0) # hide cursor
     crmode
@@ -61,7 +62,8 @@ class Game
       data.player_x,
       data.player_y,
       data.room_layout,
-      data.room_objects
+      data.room_objects,
+      data.frame
     )
     Player.draw(
       data.player_x,

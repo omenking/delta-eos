@@ -1,0 +1,342 @@
+{
+  "name": "Corridor",
+  "states": {
+    "gate": 0
+  },
+  "objects": {
+    "1": {
+      "handle": "door",
+      "exit_action": "right",
+      "exit_room": "hall",
+      "exit_position": {
+        "x": 0,
+        "y": 2
+      },
+      "state": "closed",
+      "on": {
+        "approach": {
+        }
+      },
+      "states": {
+        "opening": { "character": "▐"},
+        "opened" : { "character": " "},
+        "closed" : { "character": "█"}
+      }
+    },
+    "I": {
+      "handle": "gate_open_0",
+      "character": " ",
+      "traverse": true,
+      "on": {
+        "enter": {
+          "gate": 0
+        }
+      }
+    },
+    "H": {
+      "handle": "gate_open_1",
+      "character": " ",
+      "traverse": true,
+      "on": {
+        "enter": {
+          "gate": 1
+        }
+      }
+    },
+    "G": {
+      "handle": "gate_open_2",
+      "character": " ",
+      "traverse": true,
+      "on": {
+        "enter": {
+          "gate": 2
+        }
+      }
+    },
+    "F": {
+      "handle": "gate_open_3",
+      "character": " ",
+      "traverse": true,
+      "on": {
+        "enter": {
+          "gate": 3
+        }
+      }
+    },
+    "E": {
+      "handle": "gate_open_4",
+      "character": " ",
+      "traverse": true,
+      "on": {
+        "enter": {
+          "gate": 4
+        }
+      }
+    },
+    "D": {
+      "handle": "gate_open_5",
+      "character": " ",
+      "traverse": true,
+      "on": {
+        "enter": {
+          "gate": 5
+        }
+      }
+    },
+    "C": {
+      "handle": "gate_open_6",
+      "character": " ",
+      "traverse": true,
+      "on": {
+        "enter": {
+          "gate": 6
+        }
+      }
+    },
+    "B": {
+      "handle": "gate_open_7",
+      "character": " ",
+      "traverse": true,
+      "on": {
+        "enter": {
+          "gate": 7
+        }
+      }
+    },
+    "A": {
+      "handle": "gate_open_8",
+      "character": " ",
+      "traverse": true,
+      "on": {
+        "enter": {
+          "gate": 8
+        }
+      }
+    },
+    "3": {
+      "handle": "door",
+      "exit_action": "down",
+      "exit_room": "hall_gamma",
+      "exit_position": {
+        "x": 47,
+        "y": 2
+      },
+      "room_state": {
+        "gate": {
+          "0": "closed",
+          "1": "closed",
+          "2": "closed",
+          "3": "closed",
+          "4": "closed",
+          "5": "closed",
+          "6": "closed",
+          "7": "opening",
+          "8": "opened"
+        }
+      },
+      "state": "closed",
+      "states": {
+        "opening": { "character": "▐", "color": "black_white"},
+        "opened" : { "character": " "},
+        "closed" : { "character": "█"}
+      }
+    },
+    "4": {
+      "handle": "door",
+      "exit_action": "down",
+      "exit_room": "hall_gamma",
+      "exit_position": {
+        "x": 47,
+        "y": 2
+      },
+      "room_state": {
+        "gate": {
+          "0": "closed",
+          "1": "closed",
+          "2": "closed",
+          "3": "closed",
+          "4": "closed",
+          "5": "opening",
+          "6": "opened",
+          "7": "opened",
+          "8": "opened"
+        }
+      },
+      "state": "closed",
+      "states": {
+        "opening": { "character": "▐", "color": "black_white"},
+        "opened" : { "character": " "},
+        "closed" : { "character": "█"}
+      }
+    },
+    "5": {
+      "handle": "door",
+      "exit_action": "down",
+      "exit_room": "hall_gamma",
+      "exit_position": {
+        "x": 47,
+        "y": 2
+      },
+      "room_state": {
+        "gate": {
+          "0": "closed",
+          "1": "closed",
+          "2": "closed",
+          "3": "opening",
+          "4": "opened",
+          "5": "opened",
+          "6": "opened",
+          "7": "opened",
+          "8": "opened"
+        }
+      },
+      "state": "closed",
+      "states": {
+        "opening": { "character": "▐", "color": "black_white"},
+        "opened" : { "character": " "},
+        "closed" : { "character": "█"}
+      }
+    },
+    "6": {
+      "handle": "door",
+      "exit_action": "down",
+      "exit_room": "hall_gamma",
+      "exit_position": {
+        "x": 47,
+        "y": 2
+      },
+      "room_state": {
+        "gate": {
+          "0": "closed",
+          "1": "opening",
+          "2": "opened",
+          "3": "opened",
+          "4": "opened",
+          "5": "opened",
+          "6": "opened",
+          "7": "opened",
+          "8": "opened"
+        }
+      },
+      "state": "closed",
+      "states": {
+        "opening": { "character": "▐", "color": "black_white"},
+        "opened" : { "character": " "},
+        "closed" : { "character": "█"}
+      }
+    },
+    "7": {
+      "handle": "door",
+      "exit_action": "down",
+      "exit_room": "hall_gamma",
+      "exit_position": {
+        "x": 47,
+        "y": 2
+      },
+      "room_state": {
+        "gate": {
+          "0": "closed",
+          "1": "opening",
+          "2": "opened",
+          "3": "opened",
+          "4": "opened",
+          "5": "opened",
+          "6": "opened",
+          "7": "opened",
+          "8": "opened"
+        }
+      },
+      "state": "closed",
+      "states": {
+        "opening": { "character": "▐", "color": "white_black"},
+        "opened" : { "character": " "},
+        "closed" : { "character": "█"}
+      }
+    },
+    "8": {
+      "handle": "door",
+      "exit_action": "down",
+      "exit_room": "hall_gamma",
+      "room_state": {
+        "gate": {
+          "0": "closed",
+          "1": "closed",
+          "2": "closed",
+          "3": "opening",
+          "4": "opened",
+          "5": "opened",
+          "6": "opened",
+          "7": "opened",
+          "8": "opened"
+        }
+      },
+      "exit_position": {
+        "x": 47,
+        "y": 2
+      },
+      "state": "closed",
+      "states": {
+        "opening": { "character": "▐", "color": "white_black"},
+        "opened" : { "character": " "},
+        "closed" : { "character": "█"}
+      }
+    },
+    "9": {
+      "handle": "door",
+      "exit_action": "down",
+      "exit_room": "hall_gamma",
+      "exit_position": {
+        "x": 47,
+        "y": 2
+      },
+      "room_state": {
+        "gate": {
+          "0": "closed",
+          "1": "closed",
+          "2": "closed",
+          "3": "closed",
+          "4": "closed",
+          "5": "opening",
+          "6": "opened",
+          "7": "opened",
+          "8": "opened"
+        }
+      },
+      "state": "closed",
+      "states": {
+        "opening": { "character": "▐", "color": "white_black"},
+        "opened" : { "character": " "},
+        "closed" : { "character": "█"}
+      }
+    },
+    "0": {
+      "handle": "door",
+      "exit_action": "down",
+      "exit_room": "hall_gamma",
+      "exit_position": {
+        "x": 47,
+        "y": 2
+      },
+      "room_state": {
+        "gate": {
+          "0": "closed",
+          "1": "closed",
+          "2": "closed",
+          "3": "closed",
+          "4": "closed",
+          "5": "closed",
+          "6": "closed",
+          "7": "opening",
+          "8": "opened"
+        }
+      },
+      "state": "closed",
+      "states": {
+        "opening": { "character": "▐", "color": "white_black"},
+        "opened" : { "character": " "},
+        "closed" : { "character": "█"}
+      }
+    }
+  }
+}
+

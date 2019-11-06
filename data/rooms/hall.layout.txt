@@ -1,5 +1,19 @@
-WWWWWWWWWWWWWWWWWWW1WWWWWWWWWWWWWWWWWWWWWWWWWW
-W                                            W
-                                              
-W                                            W
-WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+WWWWWWWWWWWWWWWWWWWWWW1WWWWWWWWWWWWWWWWWWWWWWWW
+W                                             W
+4                                             3
+W                                             W
+WWWWWWWWWWWWWWWWWWW       WWWWWWWWWWWWWWWWWWWWW
+                  W       W                    
+                  W       W                    
+                  W       W                    
+                  W       W                    
+                  W       W                    
+                          2                    
+                  W       W                    
+                  W       W                    
+                  W       W                    
+                  W       W                    
+                  W       W                    
+                  W       W                    
+                  W       W                    
+                  WWWW WWWW                    

@@ -15,6 +15,51 @@
         "opened" : { "character": " "},
         "closed" : { "character": "█"}
       }
+    },
+    "2": {
+      "handle": "door",
+      "exit_action": "right",
+      "exit_room": "foreman",
+      "exit_position": {
+        "x": 0,
+        "y": 6
+      },
+      "state": "closed",
+      "states": {
+        "opening": { "character": "▐"},
+        "opened" : { "character": " "},
+        "closed" : { "character": "█"}
+      }
+    },
+    "3": {
+      "handle": "door",
+      "exit_action": "right",
+      "exit_room": "hall_beta",
+      "exit_position": {
+        "x": 0,
+        "y": 2
+      },
+      "state": "closed",
+      "states": {
+        "opening": { "character": "▐"},
+        "opened" : { "character": " "},
+        "closed" : { "character": "█"}
+      }
+    },
+    "4": {
+      "handle": "door",
+      "exit_action": "left",
+      "exit_room": "hall_gamma",
+      "exit_position": {
+        "x": 47,
+        "y": 2
+      },
+      "state": "closed",
+      "states": {
+        "opening": { "character": "▐"},
+        "opened" : { "character": " "},
+        "closed" : { "character": "█"}
+      }
     }
   }
 }

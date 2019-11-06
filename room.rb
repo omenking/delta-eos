@@ -8,7 +8,7 @@ class Room
     if data[y].nil? || data[y][x].nil?
       return { 'handle' => :void }
     end
-    if data[y][x] == 'W'
+    if RenderWalls.wall?(data[y][x])
       { 'handle' => :wall  }
     else
       object =
@@ -24,7 +24,7 @@ class Room
     end
   end
 
-  def self.draw player_x, player_y, layout, objects
+  def self.draw player_x, player_y, layout, objects, frame
     rendered = RenderWalls.render layout
     y = 0
     rendered.each do |row|
@@ -36,20 +36,71 @@ class Room
       y += 1
     end
     objects.each do |obj|
-        character = if obj['character']
-          obj['character']
-        else
-          obj['states'][obj['state']]['character']
+      # states.frames.color
+      # states.color
+      # frames.color
+      # color
+      color =
+      if obj['state'] &&
+         obj['states'][obj['state']] &&
+         obj['states'][obj['state']]['frames'] &&
+         obj['states'][obj['state']]['frames'][frame.to_s] &&
+         obj['states'][obj['state']]['frames'][frame.to_s]['color'] &&
+        obj['states'][obj['state']]['frames'][frame.to_s]['color']
+      elsif obj['state'] &&
+            obj['states'][obj['state']] &&
+            obj['states'][obj['state']]['color']
+        obj['states'][obj['state']]['color']
+      elsif obj['frames'] &&
+            obj['frames'][frame.to_s] &&
+            obj['frames'][frame.to_s]['color']
+        obj['frames'][frame.to_s]['color']
+      elsif obj['color']
+        obj['color']
+      end
+      # states.frames.character
+      # states.character
+      # frames.character
+      # character
+      character =
+      if obj['state'] &&
+         obj['states'][obj['state']] &&
+         obj['states'][obj['state']]['frames'] &&
+         obj['states'][obj['state']]['frames'][frame.to_s] &&
+         obj['states'][obj['state']]['frames'][frame.to_s]['character'] &&
+        obj['states'][obj['state']]['frames'][frame.to_s]['character']
+      elsif obj['state'] &&
+            obj['states'][obj['state']] &&
+            obj['states'][obj['state']]['character']
+        obj['states'][obj['state']]['character']
+      elsif obj['frames'] &&
+            obj['frames'][frame.to_s] &&
+            obj['frames'][frame.to_s]['character']
+        obj['frames'][frame.to_s]['character']
+      elsif obj['character']
+        obj['character']
+      end
+      begin
+      Game.str obj['position']['y']+((lines/ 2)-player_y),
+               obj['position']['x']+(((cols-Dialog.width) / 2)-player_x),
+               character,
+               color
+      rescue
+        close_screen
+        binding.pry
+      end
+    end
+  end
+
+  def self.update_room_states data
+    data.room_objects.each do |obj|
+      if obj['room_state'] && data.room_states
+        data.room_states.each do |key,value|
+          if obj['room_state'][key] && obj['room_state'][key][value.to_s]
+            obj['state'] = obj['room_state'][key][value.to_s]
+          end
         end
-        color = if obj['color']
-          obj['color']
-        elsif obj['state']
-          obj['states'][obj['state']]['color']
-        end
-        Game.str obj['position']['y']+((lines/ 2)-player_y),
-                 obj['position']['x']+(((cols-Dialog.width) / 2)-player_x),
-                 character,
-                 color
+      end
     end
   end
 
@@ -65,19 +116,21 @@ class Room
     end
 
     data.room_objects.each do |obj|
-      found =
-      neighbours.find do |coords|
-        obj['position']['x'] == coords[0] &&
-        obj['position']['y'] == coords[1]
-      end # neighbours
-      case obj['handle'].to_sym
-      when :door
-        if found && [:tn,:nl,:nr,:bn].include?(found[2])
-          obj['state'] = 'opened'
-        else
-          obj['state'] = 'closed'
-        end
-      end
+      if obj['position']
+        found =
+        neighbours.find do |coords|
+          obj['position']['x'] == coords[0] &&
+          obj['position']['y'] == coords[1]
+        end # neighbours
+        case obj['handle'].to_sym
+        when :door
+          if found && [:tn,:nl,:nr,:bn].include?(found[2]) && obj['state'] == 'closed'
+            obj['state'] = 'opened'
+          elsif obj['state'] == 'opened'
+            obj['state'] = 'closed'
+          end
+        end # obj['handle']
+      end # obj['position']
     end # objects
   end
 
@@ -120,17 +173,29 @@ class Room
         end
       end
     else
-      case future_tile['handle'].to_sym
-      when :force_field_decker
-        data.dialog_selected_index = 0
-        data.thread_key = :decker_holding_cell
-        data.mode   = :dialog
-      when :door
+      if future_tile['traverse']
         data.player_y = new_y
         data.player_x = new_x
-      when :empty
-        data.player_y = new_y
-        data.player_x = new_x
+        if future_tile['on'] && future_tile['on']['enter']
+          future_tile['on']['enter'].each do |key,value|
+            data.room_states[key.to_s] = value
+          end
+        end
+      else
+        case future_tile['handle'].to_sym
+        when :force_field_decker
+          data.dialog_selected_index = 0
+          data.thread_key = :decker_holding_cell
+          data.mode   = :dialog
+        when :door
+          if future_tile['state'] != 'locked'
+            data.player_y = new_y
+            data.player_x = new_x
+          end
+        when :empty
+          data.player_y = new_y
+          data.player_x = new_x
+        end
       end
     end
   end
