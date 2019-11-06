@@ -115,8 +115,22 @@ class Dialog
   end
 
   def self.draw_choices dialog_selected_index, strand
-    max_lines = 0
+    current_line = 0
+
+    if strand['warnings'].is_a?(Array)
+      strand['warnings'].each do |warning|
+        setpos(current_line+2,cols-self.width+2)
+        addstr "#{warning['skill'].upcase} ━━ #{warning['text']}"
+        current_line += 2
+      end
+    end
+
+    setpos(current_line+2,cols-self.width+2)
+    addstr "#{strand['speaker'].upcase} ━━ #{strand['text']}"
+    current_line += 2
+
     choice_parts = []
+    max_lines = 0
     strand['choices'].each_with_index do |choice,i|
       text = "#{i+1}). " + choice['text']
       parts = text.scan(/.{1,#{self.width-4}}/)
@@ -126,10 +140,9 @@ class Dialog
 
     choice_parts.each{|cc|cc.each{|c| max_lines += 1}}
 
-    current_line = 0
     choice_parts.each_with_index do |choice,choice_index|
       choice.each do |choice_part|
-        setpos(lines-(max_lines-current_line+2),cols-self.width+2)
+        setpos(current_line+2,cols-self.width+2)
         attron(color_pair(BLACK_ON_GREEN)) if dialog_selected_index == choice_index
         addstr(choice_part)
         attroff(color_pair(BLACK_ON_GREEN)) if dialog_selected_index == choice_index
@@ -137,6 +150,23 @@ class Dialog
       end
     end
 
+  end
+
+  def self.action data, action
+    case action
+    when :up
+      data.dialog_selected_index = Dialog.up data.dialog_selected_index, data.strand
+    when :down
+      data.dialog_selected_index = Dialog.down data.dialog_selected_index, data.strand
+    when :enter
+      result = data.strand_result
+      if result['state']
+        data.dialog_selected_index = 0
+        data.thread['state'] = result['state']
+      end
+      data.exp += result['exp'] if result['exp']
+      data.mode = :room         if result['leave']
+    end
   end
 
   def self.enter strand, dialog_selected_index

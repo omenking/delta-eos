@@ -7,36 +7,23 @@ class HudBar
     color, color_alt =
     if mode == :room
       [
-        GREEN_ON_BLACK,
-        BLACK_ON_GREEN
+        :green_black,
+        :black_green
       ]
     else
       [
-        WHITE_ON_BLACK,
-        BLACK_ON_WHITE
+        :white_black,
+        :black_white
       ]
     end
-    attron(color_pair(color))
-    # sold line
-    line = ''
-    (cols-Dialog.width).times.each{|i| line += '▄'}
-    setpos(0,0)
-    addstr(line)
-    attroff(color_pair(color))
-    attron(color_pair(color_alt))
-    #solid
-    line = ''
-    (cols-Dialog.width).times.each{|i| line += ' '}
-    setpos(1,0)
-    addstr(line)
-    # partial line
-    line = ''
-    (cols-Dialog.width).times.each{|i| line += '▄'}
-    setpos(2,0)
-    addstr(line)
-    # text
-    setpos(1,2)
-    addstr("Room: #{room_name}")
-    attroff(color_pair(color_alt))
+    Color.color color do
+      Game.str 0, 0, (cols-Dialog.width).times.map{|i|'▄'}.join('')
+    end
+
+    Color.color color_alt do
+      Game.str 1, 0, (cols-Dialog.width).times.map{|i|' '}.join('')
+      Game.str 2, 0, (cols-Dialog.width).times.map{|i|'▄'}.join('')
+      Game.str 1, 2, "Room: #{room_name}"
+    end
   end
 end

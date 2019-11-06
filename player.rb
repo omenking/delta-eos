@@ -20,9 +20,8 @@ class Player
   end
 
   def self.draw x, y
-    attron(color_pair(BLACK_ON_WHITE))
-    setpos(lines/2,(cols-Dialog.width)/2)
-    addch('P')
-    attroff(color_pair(BLACK_ON_WHITE))
+    Color.color :black_cyan do
+      Game.str lines/2, (cols-Dialog.width)/2, 'P'
+    end
   end
 end

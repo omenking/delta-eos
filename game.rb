@@ -8,18 +8,35 @@ class Game
     init_screen
     curs_set(0) # hide cursor
     crmode
-    start_color
-    init_pair(WHITE_ON_BLACK, COLOR_WHITE, COLOR_BLACK)
-    init_pair(BLACK_ON_WHITE, COLOR_BLACK, COLOR_WHITE)
-    init_pair(BLACK_ON_GREEN, COLOR_BLACK, COLOR_GREEN)
-    init_pair(GREEN_ON_BLACK, COLOR_GREEN, COLOR_BLACK)
-    use_default_colors
+    Color.init
     refresh
   end
 
+  def self.action ch
+    case ch
+    when 'h' then :left
+    when 'j' then :down
+    when 'k' then :up
+    when 'l' then :right
+    when 'f' then :enter
+    when 'n' then :health
+    when 'm' then :morale
+    when 't' then :skills
+    when 'i' then :inv
+    when 'x' then :exit
+    end
+  end
+
   def self.str x, y, str, color=nil
-    setpos x, y
-    addstr str
+    if color
+      Color.color color.to_sym do
+        setpos x, y
+        addstr str
+      end
+    else
+      setpos x, y
+      addstr str
+    end
   end
 
   def self.draw data

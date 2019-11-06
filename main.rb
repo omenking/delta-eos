@@ -1,5 +1,6 @@
 require_relative 'hud_bar'
 require_relative 'game_data'
+require_relative 'color'
 require_relative 'player'
 require_relative 'render_walls'
 require_relative 'room'
@@ -43,91 +44,22 @@ Game.draw data
 while true
   # -----------------------------------------
   ch = getch
-
-  action =
-  case ch
-  when 'h' then :left
-  when 'j' then :down
-  when 'k' then :up
-  when 'l' then :right
-  when 'f' then :enter
-  when 'n' then :health
-  when 'm' then :morale
-  when 't' then :skills
-  when 'i' then :inv
-  when 'x' then :exit
+  if ch == '`'
+    close_screen
+    binding.pry
   end
-
-  x     = data.player_x
-  y     = data.player_y
-  new_x = data.player_x
-  new_y = data.player_y
-
+  action = Game.action ch
   case data.mode
-    when :overlay
-      case action
-      when :exit
-        data.mode = :room
-      end
-    when :dialog
-      case action
-      when :up
-        data.dialog_selected_index = Dialog.up data.dialog_selected_index, data.strand
-      when :down
-        data.dialog_selected_index = Dialog.down data.dialog_selected_index, data.strand
-      when :enter
-        result = data.strand_result
-        data.mode = :room         if result['leave']
-        data.exp += result['exp'] if result['exp']
-      end
-    when :room
-      case action
-      when :up    then new_y = Player.up    y
-      when :down  then new_y = Player.down  y
-      when :left  then new_x = Player.left  x
-      when :right then new_x = Player.right x
-      when :health
-        data.health[:stock]   = data.health[:stock] - 1
-        data.health[:current] = data.health[:current] + 1
-      when :morale
-        data.morale[:stock]   = data.morale[:stock] - 1
-        data.morale[:current] = data.morale[:current] + 1
-      when :skills
-        data.mode = :overlay
-      when :inv
-        data.mode = :overlay
-      end
-
-      current_tile = Room.tile_data x    , y    , data.room_layout, data.room_objects
-      future_tile  = Room.tile_data new_x, new_y, data.room_layout, data.room_objects
-
-      case current_tile['handle'].to_sym
-      when :door
-        if current_tile['exit_action'].to_sym == action
-          data.player_room = current_tile['exit_room'].to_sym
-          data.player_y    = current_tile['exit_position']['y']
-          data.player_x    = current_tile['exit_position']['x']
-        else
-          case future_tile['handle'].to_sym
-          when :empty
-            data.player_y = new_y
-            data.player_x = new_x
-          end
-        end
-      else
-        case future_tile['handle'].to_sym
-        when :force_field_decker
-          data.dialog_selected_index = 0
-          data.thread = :decker_holding_cell
-          data.mode   = :dialog
-        when :door
-          data.player_y = new_y
-          data.player_x = new_x
-        when :empty
-          data.player_y = new_y
-          data.player_x = new_x
-        end
-      end
+  when :overlay
+    case action
+    when :exit
+      data.mode = :room
+    end
+  when :dialog
+    Dialog.actions(data, action)
+  when :room
+    Room.actions(data, action)
+    Room.check_neighbours(data)
   end
   Game.draw data
   sleep(0.05)

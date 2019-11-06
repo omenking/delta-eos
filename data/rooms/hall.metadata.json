@@ -3,12 +3,17 @@
   "objects": {
     "1": {
       "handle": "door",
-      "character": "X",
       "exit_action": "up",
       "exit_room": "holding_area",
       "exit_position": {
         "x": 11,
         "y": 9
+      },
+      "state": "closed",
+      "states": {
+        "opening": { "character": "▐"},
+        "opened" : { "character": " "},
+        "closed" : { "character": "█"}
       }
     }
   }

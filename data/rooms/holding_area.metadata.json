@@ -3,31 +3,43 @@
   "objects": {
     "1": {
       "handle": "door",
-      "character": "X",
       "exit_action": "down",
       "exit_room": "hall",
       "exit_position": {
         "x": 19,
         "y": 0
+      },
+      "state": "closed",
+      "states": {
+        "opening": { "character": "▐"},
+        "opened" : { "character": " "},
+        "closed" : { "character": "█"}
       }
     },
     "2": {
       "handle": "door",
-      "character": "X",
       "exit_action": "right",
       "exit_room": "security_office",
       "exit_position": {
         "x": 0,
         "y": 2
+      },
+      "state": "closed",
+      "states": {
+        "opening": { "character": "▐"},
+        "opened" : { "character": " "},
+        "closed" : { "character": "█"}
       }
     },
     "F": {
       "handle": "force_field",
-      "character": "┅"
+      "character": "┅",
+      "color": "red_black"
     },
     "G": {
       "handle": "force_field_decker",
-      "character": "┅"
+      "character": "┅",
+      "color": "red_black"
     },
     "D": {
       "handle": "character_decker",

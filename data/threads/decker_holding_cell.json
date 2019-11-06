@@ -3,15 +3,27 @@
   "strands": {
     "introduction": {
       "speaker": "Decker",
+      "text": "....",
       "warnings": [
-        { "skill": "perception", "points": 3, "text": "This person is shaking, maybe they're cold?" }
+        {
+          "skill": "perception",
+          "points": 3,
+          "text": "This person is shaking, maybe they're cold?"
+        }
       ],
       "choices": [
-        { "result": "exp_25", "text": "Who are you?"     },
-        { "result": "exp_25", "text": "Good Morning scum"},
-        { "result": "exp_25", "text": "You look hungry"  },
+        { "result": "introduction_out", "text": "Who are you?"     },
+        { "result": "introduction_out", "text": "Good Morning scum"},
+        { "result": "introduction_out", "text": "You look hungry"  },
         { "result": "exp_25", "text": "Ready to talk?"   },
         { "result": "leave", "text": "(leave)"   }
+      ]
+    },
+    "ignoring": {
+      "speaker": "Decker",
+      "text": "....",
+      "choices": [
+        { "result": "leave", "text": "(leave)" }
       ]
     }
   },
@@ -19,6 +31,9 @@
     "exp_25": {
       "exp": 25,
       "leave": true
+    },
+    "introduction_out": {
+      "state": "ignoring"
     },
     "leave": {
       "leave": true

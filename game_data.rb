@@ -7,7 +7,7 @@ class GameData
                 :mode,
                 :dialog_selected_index,
                 :threads,
-                :thread,
+                :thread_key,
                 :exp,
                 :skills,
                 :health,
@@ -114,15 +114,20 @@ class GameData
     self.threads[key.to_sym] = thread
   end
 
+  def thread
+    return nil unless self.thread_key
+    self.threads[self.thread_key.to_sym]
+  end
+
   def strand
-    return nil unless self.thread
-    state = self.threads[self.thread.to_sym]['state']
-    self.threads[self.thread.to_sym]['strands'][state]
+    return nil unless self.thread_key
+    state = self.threads[self.thread_key.to_sym]['state']
+    self.threads[self.thread_key.to_sym]['strands'][state]
   end
 
   def strand_result
     result_key = self.strand['choices'][dialog_selected_index]['result']
-    self.threads[self.thread]['results'][result_key]
+    self.threads[self.thread_key]['results'][result_key]
   end
 
   def room_name

@@ -3,29 +3,37 @@
   "objects": {
     "1": {
       "handle": "door",
-      "character": "X",
       "exit_action": "left",
       "exit_room": "holding_area",
       "exit_position": {
         "x": 24,
         "y": 4
+      },
+      "state": "closed",
+      "states": {
+        "opening": { "character": "▐"},
+        "opened" : { "character": " "},
+        "closed" : { "character": "█"}
       }
     },
     "C": {
       "handle": "computer",
-      "character": ":"
+      "character": "▣"
     },
     "2": {
       "handle": "locker",
-      "character": "*"
+      "character": "*",
+      "color": "black_white"
     },
     "3": {
       "handle": "locker",
-      "character": "*"
+      "character": "*",
+      "color": "black_white"
     },
     "4": {
       "handle": "locker",
-      "character": "*"
+      "character": "*",
+      "color": "black_white"
     }
   }
 }
