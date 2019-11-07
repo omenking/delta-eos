@@ -71,7 +71,10 @@ class Game
     )
     SkillsOverlay.draw(
       data.mode,
-      data.skill_selected_index
+      data.skill_selected_index,
+      data.skills,
+      data.level,
+      data.points_used
     )
     InventoryOverlay.draw(
       data.mode
