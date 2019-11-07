@@ -126,7 +126,7 @@ class Dialog
   def self.draw_choices dialog_selected_index, strand
     current_line = 0
 
-    if strand['warnings'].is_a?(Array)
+    if strand['warnings'] && strand['warnings'].is_a?(Array)
       strand['warnings'].each do |warning|
         setpos(current_line+2,cols-self.width+2)
         addstr "#{warning['skill'].upcase} ━━ #{warning['text']}"
@@ -176,6 +176,8 @@ class Dialog
       if result['state']
         data.dialog_selected_index = 0
         data.thread['state'] = result['state']
+      end
+      if result['inv']
       end
       data.exp += result['exp'] if result['exp']
       data.mode = :room         if result['leave']

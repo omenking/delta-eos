@@ -14,21 +14,26 @@ class GameData
                 :health,
                 :morale,
                 :frame,
-                :points_used
+                :points_used,
+                :scanning,
+                :inventory,
+                :inventory_database,
+                :equipped
 
   def initialize
     self.dialog_selected_index = 0
     self.mode = :room
     self.running = true
-    self.player_room = :hall_gamma
-    self.player_x = 22
+    self.player_room = :security_office
+    self.player_x = 3
+    self.player_y = 3
     self.skill_selected_index = 0
-    self.player_y = 2
     self.rooms = {}
     self.threads = {}
     self.exp = 1000
     self.frame = 0
     self.points_used = 0
+    self.scanning = false
     self.health = {
       current: 1,
       max: 6,
@@ -38,6 +43,16 @@ class GameData
       current: 2,
       max: 2,
       stock: 1
+    }
+    self.inventory_database = {}
+    self.inventory = []
+    self.equipped = {
+      head: nil,
+      chest: nil,
+      legs: nil,
+      left_hand: nil,
+      right_hand: nil,
+      feet: nil
     }
     self.skills = {
       brains: 3,
@@ -118,6 +133,10 @@ class GameData
   def add_thread key, thread_file
     thread = JSON.parse File.read(thread_file)
     self.threads[key.to_sym] = thread
+  end
+
+  def add_inv inv_file
+    self.inventory_database = JSON.parse File.read(inv_file)
   end
 
   def thread

@@ -183,10 +183,6 @@ class Room
         end
       else
         case future_tile['handle'].to_sym
-        when :force_field_decker
-          data.dialog_selected_index = 0
-          data.thread_key = :decker_holding_cell
-          data.mode   = :dialog
         when :door
           if future_tile['state'] != 'locked'
             data.player_y = new_y
@@ -195,6 +191,18 @@ class Room
         when :empty
           data.player_y = new_y
           data.player_x = new_x
+        else
+          if future_tile['on'] &&
+             future_tile['on']['interact'] &&
+             future_tile['on']['interact']['thread_key']
+            key = future_tile['on']['interact']['thread_key'].to_sym
+            thread = data.threads[key]
+            if thread && thread['state'] != 'end'
+              data.dialog_selected_index = 0
+              data.thread_key            = key
+              data.mode                  = :dialog
+            end
+          end
         end
       end
     end

@@ -24,7 +24,7 @@
         "x": 0,
         "y": 2
       },
-      "state": "locked",
+      "state": "closed",
       "states": {
         "locked" : { "character": "◦", "color": "black_white"},
         "opening": { "character": "▐"},
@@ -40,7 +40,12 @@
     "G": {
       "handle": "force_field_decker",
       "character": "┅",
-      "color": "red_black"
+      "color": "red_black",
+      "on": {
+        "interact": {
+          "thread_key": "decker_holding_cell"
+        }
+      }
     },
     "D": {
       "handle": "character_decker",

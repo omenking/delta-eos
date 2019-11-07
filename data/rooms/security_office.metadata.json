@@ -28,7 +28,12 @@
     "3": {
       "handle": "locker",
       "character": "*",
-      "color": "black_white"
+      "color": "black_white",
+      "on": {
+        "interact": {
+          "thread_key": "security_locker"
+        }
+      }
     },
     "4": {
       "handle": "locker",

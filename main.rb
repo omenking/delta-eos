@@ -16,6 +16,7 @@ BLACK_ON_GREEN = 2
 GREEN_ON_BLACK = 3
 
 data = GameData.new
+data.add_inv  "#{Dir.pwd}/data/inventory.json"
 data.add_room :hall,
               "#{Dir.pwd}/data/rooms/hall.layout.txt",
               "#{Dir.pwd}/data/rooms/hall.metadata.json"
@@ -31,11 +32,13 @@ data.add_room :holding_area,
 data.add_room :security_office,
               "#{Dir.pwd}/data/rooms/security_office.layout.txt",
               "#{Dir.pwd}/data/rooms/security_office.metadata.json"
-data.add_thread :decker_holding_cell,
-              "#{Dir.pwd}/data/threads/decker_holding_cell.json"
 data.add_room :foreman,
               "#{Dir.pwd}/data/rooms/foreman.layout.txt",
               "#{Dir.pwd}/data/rooms/foreman.metadata.json"
+data.add_thread :decker_holding_cell,
+              "#{Dir.pwd}/data/threads/decker_holding_cell.json"
+data.add_thread :security_locker,
+              "#{Dir.pwd}/data/threads/security_locker.json"
 
 def onsig(sig)
   close_screen

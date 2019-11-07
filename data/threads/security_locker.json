@@ -1,0 +1,23 @@
+{
+  "state": "full",
+  "strands": {
+    "full" : {
+      "speaker": "You",
+      "text": "I bet I could borrow these",
+      "choices": [
+        { "result": "take",  "text": "Take Security Jacket" },
+        { "result": "leave", "text": "(leave)"   }
+      ]
+    }
+  },
+  "results": {
+    "take": {
+      "inv": "security_jacket",
+      "state": "end",
+      "leave": true
+    },
+    "leave": {
+      "leave": true
+    }
+  }
+}

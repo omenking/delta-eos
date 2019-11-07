@@ -7,12 +7,12 @@ class InventoryOverlay
     return unless mode == :inventory_overlay
     lines.times.each do |row|
       if row < 3 || row > lines-4
-        line = cols.times.map{|t|'╳'}.join('')
+        line = cols.times.map{|t|'╲'}.join('')
         Game.str row, 0, line
       else
         line = cols.times.map do |col|
           if col < 6 || col > cols-6
-            '╳'
+            '╲'
           elsif [6,7,cols-6,cols-7].include?(col)
             '█'
           elsif row == 3 || row == lines-4
