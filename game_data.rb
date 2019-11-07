@@ -6,13 +6,15 @@ class GameData
                 :rooms,
                 :mode,
                 :dialog_selected_index,
+                :skill_selected_index,
                 :threads,
                 :thread_key,
                 :exp,
                 :skills,
                 :health,
                 :morale,
-                :frame
+                :frame,
+                :points_used
 
   def initialize
     self.dialog_selected_index = 0
@@ -20,11 +22,13 @@ class GameData
     self.running = true
     self.player_room = :hall_gamma
     self.player_x = 22
+    self.skill_selected_index = 0
     self.player_y = 2
     self.rooms = {}
     self.threads = {}
-    self.exp = 0
+    self.exp = 1000
     self.frame = 0
+    self.points_used = 0
     self.health = {
       current: 1,
       max: 6,

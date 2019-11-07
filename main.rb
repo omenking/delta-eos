@@ -5,7 +5,8 @@ require_relative 'player'
 require_relative 'render_walls'
 require_relative 'room'
 require_relative 'dialog'
-require_relative 'overlay'
+require_relative 'skills_overlay'
+require_relative 'inventory_overlay'
 require_relative 'game'
 
 # colours Foreground Background
@@ -60,11 +61,13 @@ while true
   end
   action = Game.action ch
   case data.mode
-  when :overlay
+  when :inventory_overlay
     case action
     when :exit
       data.mode = :room
     end
+  when :skills_overlay
+    SkillsOverlay.action data, action
   when :dialog
     Dialog.action(data, action)
   when :room
@@ -75,5 +78,4 @@ while true
   Game.draw data
   data.frame += 1
   data.frame  = 0 if data.frame == 7
-  #sleep(0.05)
 end

@@ -6,7 +6,7 @@ class Dialog
     60
   end
 
-  def self.draw mode, dialog_selected_index, strand, level, next_exp, prev_exp, exp, skills, health, morale
+  def self.draw mode, dialog_selected_index, strand, level, next_exp, prev_exp, exp, skills, health, morale, points_used
     lines.times.each do |row|
       line = ''
       setpos(row,cols-self.width)
@@ -31,11 +31,11 @@ class Dialog
     when :dialog
       self.draw_choices dialog_selected_index, strand
     when :room
-      self.draw_stats level, next_exp, prev_exp, exp, skills, health, morale
+      self.draw_stats level, next_exp, prev_exp, exp, skills, health, morale, points_used
     end
   end
 
-  def self.draw_stats level, next_exp, prev_exp, exp, skills, health, morale
+  def self.draw_stats level, next_exp, prev_exp, exp, skills, health, morale, points_used
     #health[:current]
 
     #morale[:current]
@@ -80,7 +80,12 @@ class Dialog
 
     row = 11
     col = cols-self.width+2
-    Game.str row, col, 'Skills [T]'         ; row += 2
+    Game.str row, col, 'Skills [T]'
+    if (level - points_used) > 0
+      line = "▖ #{level - points_used} Points Avaliable ▝"
+      Game.str row, cols-line.size-1, line, :black_magenta
+    end
+    row += 2
     Game.str row, col, "  Brains (#{skills[:brains]})"   ; row += 1
     Game.str row, col, "  ├ Enthusiasm #{self.skill_points_draw(skills[:brains] + skills[:enthusiasm])}" ; row += 1
     Game.str row, col, "  ├ Logic      #{self.skill_points_draw(skills[:brains] + skills[:logic])}" ; row += 1

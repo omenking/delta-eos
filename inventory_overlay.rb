@@ -2,9 +2,9 @@ require 'pry'
 require "curses"
 include Curses
 
-class Overlay
+class InventoryOverlay
   def self.draw mode
-    return unless mode == :overlay
+    return unless mode == :inventory_overlay
     lines.times.each do |row|
       if row < 3 || row > lines-4
         line = cols.times.map{|t|'╳'}.join('')
@@ -31,3 +31,4 @@ class Overlay
     end
   end
 end
+

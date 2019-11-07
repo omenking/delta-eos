@@ -2,7 +2,6 @@ require 'pry'
 require "curses"
 include Curses
 
-
 class Game
   def self.init
     timeout = 500
@@ -52,7 +51,8 @@ class Game
       data.exp,
       data.skills,
       data.health,
-      data.morale
+      data.morale,
+      data.points_used
     )
     HudBar.draw(
       data.mode,
@@ -69,7 +69,11 @@ class Game
       data.player_x,
       data.player_y
     )
-    Overlay.draw(
+    SkillsOverlay.draw(
+      data.mode,
+      data.skill_selected_index
+    )
+    InventoryOverlay.draw(
       data.mode
     )
     refresh

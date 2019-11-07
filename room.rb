@@ -151,9 +151,9 @@ class Room
       data.morale[:stock]   = data.morale[:stock] - 1
       data.morale[:current] = data.morale[:current] + 1
     when :skills
-      data.mode = :overlay
+      data.mode = :skills_overlay
     when :inv
-      data.mode = :overlay
+      data.mode = :inventory_overlay
     end
 
     current_tile = Room.tile_data x    , y    , data.room_layout, data.room_objects
