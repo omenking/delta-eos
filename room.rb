@@ -104,33 +104,67 @@ class Room
     end
   end
 
+  # Room.check_neighbours is for changing the state of
+  # the objects based on if the player is standing (or not)
+  # standing beside an objects.
+ 
+  # Note: right now check_neighbours is just for handling doors
+  # to automatically open and close when players are beside them.
   def self.check_neighbours data
+    # Lets build a matrix so we check what neigbouring
+    # square is around the player
+    # This is what these symbols mean:
+    # tl = top left
+    # tl = top natural
+    # tr = top right
+    # nl = natural left
+    # nr = natural right
+    # bl = bottom left
+    # br = bottom right
+    # bn = bottom natural
     neighbours = [
       [-1,-1,:tl],[-1,0,:tn],[-1,1,:tr],
       [ 0,-1,:nl],           [0 ,1,:nr],
       [ 1,-1,:bl],[ 1,0,:bn],[1 ,1,:br]
     ].map do |coords|
+      # using the players current coodrinates
+      # we build our new matrix to have absolute player coorindates
+      # of each neigbouring room coordinates.
       x = data.player_x + coords[0]
       y = data.player_y + coords[1]
       [x,y,coords[2]]
     end
 
+    # lets iterate through each object found in the room
+    # and determine if whe should change the state of objects
+    # based on where the user player is stnading.
     data.room_objects.each do |obj|
-      if obj['position']
-        found =
-        neighbours.find do |coords|
-          obj['position']['x'] == coords[0] &&
-          obj['position']['y'] == coords[1]
-        end # neighbours
-        case obj['handle'].to_sym
-        when :door
-          if found && [:tn,:nl,:nr,:bn].include?(found[2]) && obj['state'] == 'closed'
-            obj['state'] = 'opened'
-          elsif obj['state'] == 'opened'
-            obj['state'] = 'closed'
-          end
-        end # obj['handle']
-      end # obj['position']
+      # if an object doesn't have a position (coordinate) than it does not 
+      # the physically exist in the room, so will skip it.
+      next unless obj['position']
+
+      #did we find something?
+      found =
+      neighbours.find do |coords|
+        obj['position']['x'] == coords[0] &&
+        obj['position']['y'] == coords[1]
+      end # neighbours
+
+      # lets take a look at the objects in the room
+      case obj['handle'].to_sym
+      when :door
+        # any natural direction will have a door (corners dont have doors)
+        # if we are standing beside an unlocked door, open it to show the player
+        # we can move  through it to another room
+        if found && [:tn,:nl,:nr,:bn].include?(found[2]) && obj['state'] == 'closed'
+          obj['state'] = 'opened'
+        # if door was open, and now the player is no longer standing beside it
+        # close the door. This is futurist ship, so doors close on their own.
+        elsif obj['state'] == 'opened'
+          obj['state'] = 'closed'
+        end
+      end # obj['handle']
+
     end # objects
   end
 
