@@ -4,6 +4,17 @@
 ruby main.rb
 ```
 
+## Understanding the code
+
+### How is action inputs handled?
+
+`Game.action` translates an action eg. :exit to a keyboard input eg. X
+
+
+
+
+
+
 ## References
 https://docs.ruby-lang.org/en/2.0.0/Curses.html
 https://stackoverflow.com/questions/46606653/how-do-i-get-a-bright-white-background-color-with-ncurses

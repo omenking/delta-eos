@@ -203,8 +203,8 @@ class Room
               data.mode                  = :dialog
             end
           end
-        end
-      end
-    end
-  end
-end
+        end # case future_tile['handle'].to_sym
+      end # if future_tile['traverse']
+    end # case current_tile['handle'].to_sym
+  end # def self.actions data, action
+end # class Room
