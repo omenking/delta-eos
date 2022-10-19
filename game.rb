@@ -48,11 +48,19 @@ class Game
   def self.str x, y, str, color=nil
     if color
       Color.color color.to_sym do
+        # Moves the cursor (hot spot) to the global screen position (x, y)
         setpos x, y
+
+        # add a string of characters to a curses window and advance cursor
+        # https://linux.die.net/man/3/addstr
         addstr str
       end
     else
+      # Moves the cursor (hot spot) to the global screen position (x, y)
       setpos x, y
+
+      # add a string of characters to a curses window and advance cursor
+      # https://linux.die.net/man/3/addstr
       addstr str
     end
   end
