@@ -35,6 +35,8 @@ class Dialog
     end
   end
 
+  # When the player is not in active dialog (talking to someone or expected to interact with objects)
+  # show the players stats.
   def self.draw_stats level, next_exp, prev_exp, exp, skills, health, morale, points_used
     #health[:current]
 
@@ -118,11 +120,14 @@ class Dialog
     Game.str row, col, '  Feet       (none)'; row += 1
   end
 
+  # used in Dialog.draw_stats to draw the skill points bars.
   def self.skill_points_draw points
     line = 20.times.map{|t| points > t ? '◆' : '-' }
     line.join(' ')
   end
 
+  # Draws the possible choices the player must choose from
+  # (interacting with objects, or talking to an NPC)
   def self.draw_choices dialog_selected_index, strand
     current_line = 0
 
