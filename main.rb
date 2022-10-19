@@ -75,7 +75,7 @@ while true
     Dialog.action(data, action)
   when :room
     Room.actions(data, action)
-    Room.check_neighbours(data)
+    Room.check_neighbours(data) # change state of objects we are standing beside
     Room.update_room_states(data)
   end
   Game.draw data
