@@ -18,7 +18,27 @@ ruby main.rb
 | i | open inventory |
 | x | exit popup |
 
+## Data Files
+
+### data/rooms
+
+Contains rooms data.
+A room is composed of two files, a text files and a json file.
+
+1. The json file contains the room data
+1. The text file contains the room layout
+
+### data/threads
+
+
+
+### inventory.json
+
+Contains every possible object in the game.
+These objects are referenced in strands of threads
+
 ## Common Curses functions
+
 ### crmode
 Put the terminal into cbreak mode.
 
