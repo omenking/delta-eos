@@ -83,6 +83,7 @@ class Color
     attroff pair
   end
 
+  # We run this once when we initialize the game in Game.init
   def self.init
     # allow curses to use colors
     # https://linux.die.net/man/3/start_color
