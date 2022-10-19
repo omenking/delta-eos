@@ -109,7 +109,9 @@ class Game
       data.points_used
     )
     InventoryOverlay.draw(
-      data.mode
+      data.mode,
+      data.inventory,
+      data.inventory_database
     )
 
     # refresh curses windows and lines

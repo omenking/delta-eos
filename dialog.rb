@@ -170,6 +170,7 @@ class Dialog
 
   end
 
+  # Data - represent the an instance of GameData
   def self.action data, action
     case action
     when :up
@@ -183,6 +184,7 @@ class Dialog
         data.thread['state'] = result['state']
       end
       if result['inv']
+        data.inventory.push result['inv']
       end
       data.exp += result['exp'] if result['exp']
       data.mode = :room         if result['leave']

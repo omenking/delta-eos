@@ -44,8 +44,13 @@ class GameData
       max: 2,
       stock: 1
     }
+    # stores data/inventory.json which has a reference
+    # to every possible object in the game
     self.inventory_database = {}
+
+    # store the players current inventory
     self.inventory = []
+
     self.equipped = {
       head: nil,
       chest: nil,
@@ -135,6 +140,8 @@ class GameData
     self.threads[key.to_sym] = thread
   end
 
+  # Loads the inventory database into game data.
+  # Runs once at the start of the game
   def add_inv inv_file
     self.inventory_database = JSON.parse File.read(inv_file)
   end
