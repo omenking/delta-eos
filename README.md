@@ -1,4 +1,11 @@
-#https://docs.ruby-lang.org/en/2.0.0/Curses.html
+## How to run
+
+```sh
+ruby main.rb
+```
+
+## References
+https://docs.ruby-lang.org/en/2.0.0/Curses.html
 https://stackoverflow.com/questions/46606653/how-do-i-get-a-bright-white-background-color-with-ncurses
 https://www.linuxjournal.com/content/programming-color-ncurses
 https://www.pinterest.ca/pin/160440805446947199/?lp=true
