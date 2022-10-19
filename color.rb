@@ -79,10 +79,19 @@ class Color
   end
 
   def self.init
+    # allow curses to use colors
+    # https://linux.die.net/man/3/start_color
     start_color
+
     self.colors.each do |key, value|
+      # initializes a color-pair with curses
+      # there is a pair colors because one is the foreground and the other is the background
+      # https://linux.die.net/man/3/init_pair
       init_pair value[:index], value[:pair][0], value[:pair][1]
     end
+
+    # use terminal's default colors
+    # https://linux.die.net/man/3/use_default_colors
     use_default_colors
   end
 end
