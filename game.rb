@@ -58,7 +58,10 @@ class Game
   end
 
   def self.draw data
+    # Clear the window
+    # https://linux.die.net/man/3/clear
     clear
+
     Dialog.draw(
       data.mode,
       data.dialog_selected_index,
@@ -97,6 +100,9 @@ class Game
     InventoryOverlay.draw(
       data.mode
     )
+
+    # refresh curses windows and lines
+    # https://linux.die.net/man/3/refresh
     refresh
   end
 end
