@@ -191,9 +191,10 @@ class Dialog
     end
   end
 
+  # where is this being used?
   def self.enter strand, dialog_selected_index
     strand['choices'][dialog_selected_index]['results']
-  end
+  end # def self.enter strand, dialog_selected_index
 
   def self.up dialog_selected_index, strand
     if dialog_selected_index == 0
@@ -201,7 +202,7 @@ class Dialog
     else
       dialog_selected_index - 1
     end
-  end
+  end # def self.up dialog_selected_index, strand
 
   def self.down dialog_selected_index, strand
     if dialog_selected_index == strand['choices'].length-1
@@ -209,5 +210,5 @@ class Dialog
     else
       dialog_selected_index + 1
     end
-  end
-end
+  end # def self.down dialog_selected_index, strand
+end # class Dialog

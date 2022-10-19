@@ -57,4 +57,30 @@ class InventoryOverlay
       Game.str 8+i, 11, inventory_database[obj_name]['name']
     end
   end
+
+  def self.action data, action
+    case action
+    when :up
+      data.dialog_selected_index = Dialog.up data.dialog_selected_index, data.strand
+    when :down
+      data.dialog_selected_index = Dialog.down data.dialog_selected_index, data.strand
+    when :enter
+    end
+  end # def self.action data, action
+
+  def self.up dialog_selected_index, strand
+    if dialog_selected_index == 0
+      strand['choices'].length-1
+    else
+      dialog_selected_index - 1
+    end
+  end # def self.up dialog_selected_index, strand
+
+  def self.down dialog_selected_index, strand
+    if dialog_selected_index == strand['choices'].length-1
+      0
+    else
+      dialog_selected_index + 1
+    end
+  end # def self.down dialog_selected_index, strand
 end # class InventoryOverlay
