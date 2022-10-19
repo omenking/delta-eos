@@ -71,6 +71,11 @@ class Color
     }
   end
 
+  # Used to color a group of Game strings...
+  # eg.
+  # Color.color :yellow_red do
+  #  Game.str 0, 0, "Hello World"
+  # end
   def self.color key, &block
     pair = color_pair self.colors[key][:index]
     attron pair
