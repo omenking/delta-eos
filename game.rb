@@ -4,11 +4,26 @@ include Curses
 
 class Game
   def self.init
+    # https://linux.die.net/man/3/timeout
     timeout = 500
+
+    # https://pubs.opengroup.org/onlinepubs/7908799/xcurses/initscr.html
     init_screen
-    curs_set(0) # hide cursor
+
+    # hide cursor
+    # https://linux.die.net/man/3/curs_set
+    curs_set(0) 
+    
+    # Put the terminal into cbreak mode.
+    # disables line buffering and erase/kill character-processing (interrupt and flow control characters are unaffected), 
+    # making characters typed by the user immediately available to the program.
+    # https://www.rubydoc.info/gems/curses/Curses.crmode
     crmode
+
     Color.init
+
+    # refresh curses windows and lines
+    # https://linux.die.net/man/3/refresh
     refresh
   end
 
@@ -27,6 +42,9 @@ class Game
     end
   end
 
+  # Used to draw a string
+  # eg. 
+  # Game.str 0, 0, "Hello World", :yellow_red
   def self.str x, y, str, color=nil
     if color
       Color.color color.to_sym do
