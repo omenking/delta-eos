@@ -31,7 +31,7 @@ DEPENDENCIES
   rspec
 
 RUBY VERSION
-   ruby 2.6.0p0
+   ruby 3.1.2p20
 
 BUNDLED WITH
    2.0.1
