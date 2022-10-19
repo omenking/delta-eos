@@ -27,6 +27,9 @@ class Game
     refresh
   end
 
+  # Each gameloop which occurs in main.rb will call
+  # this action to translate the input into a symbol that represents
+  # the action. 
   def self.action ch
     case ch
     when 'h' then :left

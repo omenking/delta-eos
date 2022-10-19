@@ -4,16 +4,19 @@
 ruby main.rb
 ```
 
-## Understanding the code
+## Controls
 
-### How is action inputs handled?
-
-`Game.action` translates an action eg. :exit to a keyboard input eg. X
-
-
-
-
-
+| key | action |
+|---|---|
+| h |  move left |
+| j |  move down |
+| k |  move up |
+| l |  move right |
+| f | enter / interact |
+| m | boost morale |
+| n | boost health |
+| i | open inventory |
+| x | exit popup |
 
 ## References
 https://docs.ruby-lang.org/en/2.0.0/Curses.html
